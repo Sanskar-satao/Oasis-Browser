@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Calendar App</title>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --accent: #ff0000;
+            --panel-bg: rgba(255, 255, 255, 0.85);
+        }
+
+        [data-theme="dark"] {
+            --bg: #121212;
+            --text: #ffffff;
+            --accent: #ff4c4c;
+            --panel-bg: rgba(0, 0, 0, 0.6);
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background-color: var(--bg);
+            color: var(--text);
+            transition: background 0.3s, color 0.3s;
+            background-image: url(https://images.pexels.com/photos/1421903/pexels-photo-1421903.jpeg?cs=srgb&dl=pexels-eberhardgross-1421903.jpg&fm=jpg);
+        }
+
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .calendar {
+            flex: 1 1 850px;
+            min-width: 350px;
+            height: 700px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: var(--panel-bg);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--accent);
+            color: white;
+            padding: 15px 20px;
+        }
+
+        .calendar-header button {
+            background-color: white;
+            color: var(--accent);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .calendar-header button:hover {
+            background-color: #f4f4f4;
+            transition: 0.2s ease;
+            padding: 20px;
+        }
+
+        .calendar-days,
+        .calendar-dates {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            
+        }
+
+        .calendar-days {
+            background-color: #f1f1f1;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .calendar-dates div {
+            padding: 18px;
+            border: 1px solid #000;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s, color 0.3s;
+            height: 60px;
+            border-radius: 20%;
+            transition: 0.2s ease;
+        }
+
+        .calendar-dates div:hover {
+            padding: 25px;
+            background-color: #ff9595;
+            color: rgb(0, 0, 0);
+            transform: scale(1.0);
+            border-radius: 20%;
+            transition: 0.2s ease;
+        }
+
+        .today {
+            background-color: #d0e8ff;
+            border-radius: 20%;
+        }
+
+        .selected {
+            background-color: var(--accent);
+            color: white;
+            border-radius: 20%;
+        }
+
+        .side-panel {
+            flex: 1 1 300px;
+            background-color: var(--panel-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .side-panel input,
+        .side-panel textarea {
+            width: 100%;
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .clock {
+            font-size: 50px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .theme-toggle {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body data-theme="light">
+    <div class="main-container">
+        <div class="calendar">
+            <div class="calendar-header">
+                <button onclick="changeMonth(-1)">&#8592; Prev</button>
+                <div id="monthYear"></div>
+                <button onclick="changeMonth(1)">Next &#8594;</button>
+            </div>
+            <div class="calendar-days">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+            <div class="calendar-dates" id="calendar"></div>
+        </div>
+
+        <div class="side-panel">
+            <label><strong>Pick a Date:</strong></label>
+            <input type="date" id="smallDate">
+            <div class="clock" id="clock">--:--:--</div>
+
+            <label for="noteBox"><strong>Note for Selected Date:</strong></label>
+            <textarea id="noteBox" rows="4" placeholder="Write something..."></textarea>
+            <button onclick="saveNote()">Save Note</button>
+
+            <div class="theme-toggle">
+                <label><input type="checkbox" id="darkModeToggle"> Dark Mode</label>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const calendar = document.getElementById("calendar");
+        const monthYear = document.getElementById("monthYear");
+        const noteBox = document.getElementById("noteBox");
+        const smallDate = document.getElementById("smallDate");
+        const darkModeToggle = document.getElementById("darkModeToggle");
+
+        let current = new Date();
+        let selectedDate = null;
+
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById("clock").textContent = `${h}:${m}:${s}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function renderCalendar(date) {
+            calendar.innerHTML = "";
+            const month = date.getMonth();
+            const year = date.getFullYear();
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            monthYear.textContent = `${date.toLocaleString('default', { month: 'long' })} ${year}`;
+
+            for (let i = 0; i < firstDay; i++) {
+                calendar.innerHTML += "<div></div>";
+            }
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const cell = document.createElement("div");
+                const isToday = d === new Date().getDate() && month === new Date().getMonth() && year === new Date().getFullYear();
+                const fullDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+
+                cell.textContent = d;
+                if (isToday) cell.classList.add("today");
+                if (selectedDate === fullDate) cell.classList.add("selected");
+
+                cell.onclick = () => {
+                    selectedDate = fullDate;
+                    smallDate.value = fullDate;
+                    noteBox.value = localStorage.getItem(fullDate) || "";
+                    renderCalendar(current);
+                };
+
+                calendar.appendChild(cell);
+            }
+        }
+
+        function changeMonth(offset) {
+            current.setMonth(current.getMonth() + offset);
+            renderCalendar(current);
+        }
+
+        smallDate.onchange = () => {
+            selectedDate = smallDate.value;
+            noteBox.value = localStorage.getItem(selectedDate) || "";
+            current = new Date(selectedDate);
+            renderCalendar(current);
+        };
+
+        function saveNote() {
+            if (selectedDate) {
+                localStorage.setItem(selectedDate, noteBox.value);
+                alert("Note saved!");
+            } else {
+                alert("Select a date first.");
+            }
+        }
+
+        darkModeToggle.onchange = () => {
+            const isDark = darkModeToggle.checked;
+            document.body.setAttribute("data-theme", isDark ? "dark" : "light");
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+        };
+
+        // Load theme preference
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.body.setAttribute("data-theme", savedTheme);
+        darkModeToggle.checked = savedTheme === "dark";
+
+        renderCalendar(current);
+    </script>
+</body>
+
+</html>
