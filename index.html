@@ -2,16 +2,15 @@
 <html>
 
 <head>
-    <title>New Tab</title>
-
+    <title>Oasis Tab</title>
     <style>
         body {
             font-family: comic sans-serif;
             text-align: center;
             margin-top: 100px;
             font-size: 55px;
-            color: rgb(255, 255, 255);
-            background-image: url(https://images.pexels.com/photos/1421903/pexels-photo-1421903.jpeg?cs=srgb&dl=pexels-eberhardgross-1421903.jpg&fm=jpg);
+            color: white;
+            background-image: url(https://images.pexels.com/photos/1421903/pexels-photo-1421903.jpeg);
             background-size: cover;
             background-attachment: fixed;
             background-position: top;
@@ -19,7 +18,25 @@
             border-radius: 16px;
         }
 
-        input[type="text"] {
+        h1 {
+            animation: slidedown 1s ease;
+            text-shadow: 0 0 10px white;
+            border-radius: 32px;
+            text-transform: uppercase;
+            transition: 0.3s ease;
+        }
+
+        @keyframes slidedown {
+            0% {
+                transform: translateY(-100px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        form input[type="text"] {
             padding: 15px;
             color: aliceblue;
             width: 500px;
@@ -32,23 +49,12 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             font-style: italic;
             animation: slideright 1s ease;
+            transition: 0.5s ease;
         }
 
-        @keyframes slideright {
-
-            0%,
-            100% {
-                transform: translateX(-200px);
-            }
-
-            100% {
-                transform: translateX(0);
-            }
-        }
-
-        input[type="text"]:focus {
+        form input[type="text"]:focus {
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(2px);
             display: inline-block;
             box-shadow: 0 4px 30px rgba(255, 255, 255, 0.1);
             padding: 15px 40px;
@@ -59,10 +65,19 @@
             margin-left: 20px;
             transition: 0.5s ease-in-out;
             transform: scale(1.1);
-
         }
 
-        input[type="submit"] {
+        @keyframes slideright {
+            0% {
+                transform: translateX(-200px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        form input[type="submit"] {
             padding: 15px 30px;
             font-size: 16px;
             cursor: pointer;
@@ -77,25 +92,13 @@
             font-style: oblique;
         }
 
-        @keyframes slideleft {
-
-            0%,
-            100% {
-                transform: translateX(200px);
-            }
-
-            100% {
-                transform: translateX(0);
-            }
-        }
-
-        input[type="submit"]:hover {
+        form input[type="submit"]:hover {
             background-color: rgb(255, 255, 255);
             color: rgb(255, 255, 255);
             transform: scale(1.2);
             outline: invert;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(2px);
             display: inline-block;
             box-shadow: 0 4px 30px rgba(255, 255, 255, 0.1);
             padding: 15px 50px;
@@ -104,113 +107,131 @@
             margin-left: 15px;
         }
 
-        input[type="submit"]:focus {
-            outline: none;
-            border: 3px solid rgb(255, 0, 0);
-            box-shadow: 0 0 20px rgb(255, 255, 255);
-            padding: 15px 10px;
-        }
-
-
-        img {
-            vertical-align: middle;
-            margin: 0 10px;
-            width: 200px;
-            transition: 0.2s ease-in-out;
-            animation: slideup 1s ease;
-        }
-
-        @keyframes slideup {
-
-            0%,
-            100% {
-                transform: translateY(200px);
+        @keyframes slideleft {
+            0% {
+                transform: translateX(200px);
             }
 
             100% {
-                transform: translateY(0);
+                transform: translateX(0);
             }
         }
 
-        img:hover {
-            transform: scale(1.5);
-            outline: none;
-            border: 3px solid rgb(255, 255, 255);
-            box-shadow: 0 0 15px rgb(255, 255, 255);
-            margin-top: 5px;
+        /* Dropdown menu */
+        .dropdown {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            z-index: 999;
         }
 
-        .roundedrect {
-            border-radius: 20%;
-            width: 75px;
-            height: 75px;
+        .dropdown-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
         }
 
-        .roundedrectangle {
-            border-radius: 20%;
-            width: 75px;
-            height: 65px;
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            filter: invert(1);
+            transition: 0.3s;
         }
 
-        h1 {
-            animation: slidedown 1s ease;
-            border-width: 10px;
-            text-shadow: 0 0 10px rgb(255, 255, 255);
-            border-radius: 32px;
-            text-transform: uppercase;
-            text-decoration: dotted;
+        .menu-icon:hover {
+            transition: 0.3s;
+            transform: scale(1.2);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             transition: 0.3s ease;
         }
-
-        @keyframes slidedown {
-
-            0%,
-            100% {
-                transform: translateY(-100px);
-            }
-
-            100% {
-                transform: translateY(0px);
-            }
+        .dropdown-content:hover {
+            transition: 0.2s ease;
 
         }
 
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: #fff;
-            padding: 10px;
-            box-shadow: 0 2px 5px gray;
+        .dropdown-content a {
+            display: inline-block;
+            margin: 10px;
+            text-decoration: none;
+        }
+
+        .dropdown-content img {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            object-fit: cover;
+            transition: 0.3s;
+        }
+
+        .dropdown-content img:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 10px white;
+        }
+
+        .show {
+            display: block;
         }
     </style>
+</head>
 
 <body>
-    <h1>oasis</h1>
+    <h1>Oasis</h1>
+
     <form action="https://www.google.com/search" method="get">
-        <input type="text" placeholder="Search anything here......" name="q" id="search here" required>
-        <input type="submit" value="search">
+        <input type="text" placeholder="Search anything here......" name="q" required>
+        <input type="submit" value="Search">
     </form>
-    <a href="https://www.google.com" target="_blank">
-        <img src="https://tse1.mm.bing.net/th/id/OIP.Uunv7a7swev27XEOr1GNBgHaHa?r=0&w=600&h=600&rs=1&pid=ImgDetMain&o=7&rm=3"
-            class="roundedrect" width="75px" height="75px" style="vertical-align: middle;" alt="google">
-    </a>
-    <a href="https://web.whatsapp.com/" target="_blank">
-        <img src="https://i.pinimg.com/736x/c6/d8/01/c6d80112426e35a0dc293bf68e65b013.jpg" class="roundedrect"
-            width="75px" height="75px" style="vertical-align: middle;" alt="whatsapp">
-    </a>
-    <a href="https://chatgpt.com/" target="_blank">
-        <img src="https://static.vecteezy.com/system/resources/previews/024/558/807/non_2x/openai-chatgpt-logo-icon-free-png.png"
-            class="roundedrect" alt="Chatgpt" width="75px" height="75px" style="vertical-align: middle;">
-    </a>
-    <a href="https://www.youtube.com/" target="_blank">
-        <img src="https://png.pngtree.com/png-clipart/20230401/original/pngtree-youtube-icon-social-media-png-image_9015287.png"
-            class="roundedrectangle" alt="youtube" width="75px" height="75px" style="vertical-align: middle;">
-    </a>
-    <a href="https://sanskar-satao.github.io/Calender/" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/128/3652/3652191.png"
-            class="roundedrect" width="65px" height="65px" style="vertical-align: middle;" alt="O-Calender">
-    </a>
+
+    <!-- Dropdown Menu Button -->
+    <div class="dropdown">
+        <button onclick="toggleDropdown()" class="dropdown-btn">
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828859.png" alt="Menu" class="menu-icon">
+        </button>
+        <div id="dropdownMenu" class="dropdown-content">
+            <a href="https://sanskar-satao.github.io/Oasis-Photos/" target="_blank">
+                <img src="https://images-workbench.99static.com/ySxJl7wz7CuA_VXXMjdM2ac9RqM=/99designs-contests-attachments/80/80341/attachment_80341132"
+                    alt="Oasis-Photos">
+            </a>
+            <a href="https://web.whatsapp.com/" target="_blank">
+                <img src="https://i.pinimg.com/736x/c6/d8/01/c6d80112426e35a0dc293bf68e65b013.jpg" alt="WhatsApp">
+            </a>
+            <a href="https://chatgpt.com/" target="_blank">
+                <img src="https://static.vecteezy.com/system/resources/previews/024/558/807/non_2x/openai-chatgpt-logo-icon-free-png.png"
+                    alt="ChatGPT">
+            </a>
+            <a href="https://www.youtube.com/" target="_blank">
+                <img src="https://png.pngtree.com/png-clipart/20230401/original/pngtree-youtube-icon-social-media-png-image_9015287.png"
+                    alt="YouTube">
+            </a>
+            <a href="https://sanskar-satao.github.io/Calender/" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/128/3652/3652191.png" alt="O-Calendar">
+            </a>
+        </div>
+    </div>
+
+    <!-- Script to toggle menu on click -->
+    <script>
+        function toggleDropdown() {
+            document.getElementById("dropdownMenu").classList.toggle("show");
+        }
+
+        // Close the dropdown if user clicks outside
+        window.onclick = function (event) {
+            if (!event.target.closest('.dropdown')) {
+                document.getElementById("dropdownMenu").classList.remove("show");
+            }
+        }
+    </script>
 </body>
 
 </html>
