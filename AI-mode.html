@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Mode - Oasis</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-image: url(https://media.istockphoto.com/id/1470617656/vector/ai-artificial-intelligence-chipset-on-circuit-board-in-futuristic-concept-suitable-for.jpg?s=612x612&w=0&k=20&c=_wC-pphyNI2muaUHG4N9JuYXxJEMDuzx56Dvzr8ZDUk=);
+            background-size: cover;
+            backdrop-filter: blur(5px);
+            height: 100vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 40px 50px;
+            box-shadow: 0 0 32px 0 rgb(255, 255, 255);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            border: white 2px solid;
+        }
+
+        h1 {
+            font-size: 50px;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 4px #0005;
+            border-radius: 20px;
+            padding: 5px 10px;
+        }
+
+        select, input[type="text"], button {
+            margin: 14px 0;
+            padding: 14px 18px;
+            font-size: 1.1rem;
+            border-radius: 14px;
+            border: none;
+            outline: none;
+            width: 100%;
+        }
+
+        input[type="text"] {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid #85e6ff;
+            width: 457px;
+            transition: 0.3s ease;
+        }
+        input[type="text"]:focus {
+            transition: 0.3s ease;
+            border-color: #00ffff;
+            box-shadow: 0 0 15px #ffffff;
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid #85e6ff;
+            color: #fff;
+            font-weight: 600;
+            text-align-last: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+            background-image: url('https://cdn-icons-png.flaticon.com/512/32/32195.png');
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        select:hover {
+            border-color: #ffd966;
+            box-shadow: 0 0 12px #ffef8b;
+            
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #00ffff;
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+
+        option {
+            background: #2c5364;
+            font-size: 1rem;
+            padding: 10px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #ff6ec4, #7873f5);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            transition: 0.3s ease;
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #001eff, #00d0ff);
+            box-shadow: 0 0 20px white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Mode</h1>
+        <p>Select the type of information you want:</p>
+
+        <select id="infoType">
+            <option value="text">📝  Text (Wikipedia)</option>
+            <option value="images">🖼️  Images (Pexels)</option>
+            <option value="videos">📹  Videos (YouTube)</option>
+            <option value="websites">🌐  Websites (Direct)</option>
+        </select>
+
+        <input type="text" id="queryInput" placeholder="Enter your search...">
+
+        <button onclick="performSearch()">Search</button>
+    </div>
+
+    <script>
+        function performSearch() {
+            const type = document.getElementById("infoType").value;
+            const query = document.getElementById("queryInput").value.trim();
+
+            if (!query) {
+                alert("Please enter a search query.");
+                return;
+            }
+
+            let url = "";
+
+            switch (type) {
+                case "text":
+                    url = `https://en.wikipedia.org/wiki/${encodeURIComponent(query)}`;
+                    break;
+                case "images":
+                    url = `https://www.pexels.com/search/${encodeURIComponent(query)}/`;
+                    break;
+                case "videos":
+                    url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+                    break;
+                case "websites":
+                    url = query.includes(".") ? `https://${query}` : `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                    break;
+            }
+
+            window.open(url, "_blank");
+        }
+    </script>
+</body>
+</html>
