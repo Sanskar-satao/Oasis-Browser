@@ -9,7 +9,7 @@
             margin: 0;
             min-height: 100vh;
             background: linear-gradient(115deg, rgba(255, 250, 100, 0), rgba(255, 187, 109, 0)),
-                url(https://images.pexels.com/photos/1421903/pexels-photo-1421903.jpeg) no-repeat center center fixed;
+                url(https://static.vecteezy.com/system/resources/previews/021/171/680/large_2x/colorful-abstract-wallpaper-modern-background-ai-generated-free-photo.jpg) no-repeat center center fixed;
             background-size: cover;
             color: #fff;
             display: flex;
@@ -20,21 +20,23 @@
 
         .glass-card {
             margin-top: 120px;
-            background: rgba(30, 40, 70, 0.6);
+            background: rgba(0, 0, 0, 0);
             border-radius: 80px;
             box-shadow: 0 0 25px rgb(255, 255, 255);
-            backdrop-filter: blur(1px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(32px);
             padding: 50px 80px 40px 60px;
             min-width: 420px;
             max-width: 90vw;
             border: white 2px solid;
-            transition: transform 0.3s ease, box-shadow 0.3s ease
+            transition: transform 0.5s ease, box-shadow 0.3s ease
         }
+
         .glass-card:hover {
-            box-shadow: 0 0 35px rgba(255, 255, 255, 0.5);
+            box-shadow: 0px 0px 50px rgb(0, 0, 0);
+            border: 1px solid rgb(255, 255, 255);
             transform: scale(1.0);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.5s ease, box-shadow 0.3s ease;
         }
 
         h1 {
@@ -49,6 +51,7 @@
             text-transform: uppercase;
             animation: slidedown 1.2s cubic-bezier(0.6, 0.05, 0.7, 0.95);
             text-align: center;
+            border: white 1px solid;
         }
 
         @keyframes slidedown {
@@ -85,7 +88,7 @@
         }
 
         form input[type="text"]:focus {
-            background: rgba(255, 255, 255, 0.37);
+            background: rgba(255, 255, 255, 0.259);
             box-shadow: 0 0 16px #65c7ff, 0 1px 25px #499bdd38;
             border: 2.5px solid #ff3465;
             transform: scale(1.0);
@@ -97,17 +100,17 @@
             font-size: 1.15rem;
             font-weight: 600;
             border-radius: 40px;
-            background: linear-gradient(90deg, #45d8d0da 0%, #ff4381a1 100%);
+            background: linear-gradient(90deg, #0800ffb3 0%, #ff0000b7 100%);
             color: #fff;
             border: none;
             box-shadow: 0 6px 25px rgba(255, 255, 255, 0.15);
             margin-left: 0.5em;
             cursor: pointer;
-            transition: all 0.24s cubic-bezier(0.47, 0.06, 0.52, 1.7), box-shadow 0.11s;
+            transition: all 0.26s cubic-bezier(0.47, 0.06, 0.52, 1.7), box-shadow 0.11s;
         }
 
         form input[type="submit"]:hover {
-            background: linear-gradient(82deg, #fffa60 0%, #ff5959 100%);
+            background: linear-gradient(82deg, #ff6060 0%, #595cff 100%);
             color: #ff3465;
             transform: scale(1.26);
             border: 2px solid #ff3465;
@@ -115,6 +118,34 @@
             outline: auto #fff 2px;
             margin-left: 20px;
             padding: 1.0em 3.2em;
+            animation: gradientBG 4s ease infinite, pulseBtn 2s infinite;
+            transform: scale(1.05);
+            box-shadow: 0 0 32px #ff346580;
+        }
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes pulseBtn {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         .dropdown {
@@ -268,13 +299,13 @@
             justify-content: center;
             align-items: center;
             border-radius: 20px;
-            background: rgba(31, 38, 135, 0.25);
-            backdrop-filter: blur(1px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(32px);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             transition: 0.2s ease;
             box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
-            border: 2px solid rgb(255, 255, 255);
+            border: 1px solid rgb(255, 255, 255);
         }
 
         .clock {
@@ -284,6 +315,7 @@
             border-radius: 50%;
             position: relative;
             transition: 0.2s ease;
+            background-color: rgba(0, 0, 0, 0);
         }
 
         .clock:hover {
@@ -294,7 +326,7 @@
         }
 
         .glass-clock:hover {
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 45px rgb(0, 0, 0);
             transform: scale(1.1);
             transition: 0.2s ease;
             border: 2px solid rgb(255, 255, 255);
@@ -313,23 +345,25 @@
         .hand.hour {
             width: 4px;
             height: 30px;
+            background: rgb(255, 242, 0);
         }
 
         .hand.minute {
             width: 3px;
             height: 40px;
+            background: rgb(255, 255, 255);
         }
 
         .hand.second {
             width: 2px;
             height: 45px;
-            background: rgba(255, 0, 0, 0.9);
+            background: rgb(0, 0, 255);
         }
 
         .center-dot {
             width: 8px;
             height: 8px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgb(0, 0, 0);
             border-radius: 50%;
             position: absolute;
             top: 50%;
@@ -351,8 +385,8 @@
 <body>
     <div class="glass-card">
         <h1>Oasis</h1>
-        <form action="https://www.google.com/search" method="get">
-            <input type="text" placeholder="Search anything here..." name="q" required>
+        <form id="searchForm">
+            <input type="text" placeholder="Search anything here..." id="searchInput" required>
             <input type="submit" value="Search">
         </form>
     </div>
@@ -411,7 +445,7 @@
             }
         }
         function openAIMode() {
-            window.open("AI-mode.html", "_blank");
+            window.open("ai-mode.html", "_blank");
         }
         function updateClock() {
             const now = new Date();
@@ -441,10 +475,51 @@
         setInterval(updateClock, 1000);
         updateClock(); // initial call
 
+        const appLinks = {
+            "youtube": "https://www.youtube.com/",
+            "facebook": "https://www.facebook.com/",
+            "twitter": "https://twitter.com/",
+            "instagram": "https://www.instagram.com/",
+            "whatsapp": "https://web.whatsapp.com/",
+            "linkedin": "https://www.linkedin.com/",
+            "reddit": "https://www.reddit.com/",
+            "gmail": "https://mail.google.com/",
+            "google mail": "https://mail.google.com/",
+            "gmail.com": "https://mail.google.com/",
+            "chatgpt": "https://chat.openai.com/",
+            "spotify": "https://www.spotify.com/",
+            "netflix": "https://www.netflix.com/",
+            "amazon": "https://www.amazon.com/",
+            "flipkart": "https://www.flipkart.com/",
+            "quora": "https://www.quora.com/",
+            "stackoverflow": "https://stackoverflow.com/",
+            "github": "https://github.com/",
+            "oasis-photos": "https://sanskar-satao.github.io/Oasis-Photos/",
+            "o-calendar": "https://sanskar-satao.github.io/Calender/",
+            "calendar": "https://sanskar-satao.github.io/Calender/"
+        };
+
+
+        document.getElementById("searchForm").addEventListener("submit", function (e) {
+            e.preventDefault(); // prevent default form submission
+
+            let query = document.getElementById("searchInput").value.trim().toLowerCase();
+
+            // Check if query matches any app keyword
+            if (appLinks[query]) {
+                window.open(appLinks[query], "_blank"); // open app link directly
+            } else {
+                // normal search on Google
+                window.open("https://www.google.com/search?q=" + encodeURIComponent(query), "_blank");
+            }
+
+            // optional: clear input
+            document.getElementById("searchInput").value = "";
+        });
+
 
 
     </script>
 </body>
 
 </html>
-
