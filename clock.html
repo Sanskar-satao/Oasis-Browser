@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Oasis-Clock</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            height: 100vh;
+            display: flex;
+            background: url(https://static.vecteezy.com/system/resources/previews/021/171/680/large_2x/colorful-abstract-wallpaper-modern-background-ai-generated-free-photo.jpg) no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            overflow: hidden;
+        }
+
+
+        .sidebar {
+            width: 220px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .tab {
+            margin: 12px 0;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .content-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .content {
+            display: none;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            border-radius: 20px;
+            padding: 30px;
+            width: 75%;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        #clock {
+            font-size: 70px;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.7);
+        }
+
+        #date {
+            font-size: 20px;
+            opacity: 0.85;
+        }
+
+
+        .world-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            justify-items: center;
+        }
+
+        .world-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 15px;
+            border-radius: 15px;
+            width: 230px;
+            backdrop-filter: blur(9px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .world-card:hover {
+            transform: scale(1.05);
+        }
+
+        .city-name {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        canvas {
+            margin: 10px 0;
+        }
+
+        .digital {
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+
+        #chatbox {
+            height: 250px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        .msg {
+            margin: 6px 0;
+            padding: 6px 10px;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+
+        .user {
+            background: rgba(0, 150, 255, 0.4);
+            margin-left: auto;
+        }
+
+        .bot {
+            background: rgba(255, 255, 255, 0.3);
+            margin-right: auto;
+        }
+
+        input,
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            margin: 5px;
+            outline: none;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.25);
+            cursor: pointer;
+            transition: 0.3s;
+            color: #fff;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="tab active" onclick="switchTab('clock')">Clock</div>
+        <div class="tab" onclick="switchTab('world')">World</div>
+        <div class="tab" onclick="switchTab('alarm')">Alarm</div>
+        <div class="tab" onclick="switchTab('stopwatch')">Stopwatch</div>
+        <div class="tab" onclick="switchTab('timer')">Timer</div>
+        <div class="tab" onclick="switchTab('ai')">AI Assistant</div>
+    </div>
+
+    <div class="content-area">
+        <div id="clockTab" class="content active">
+            <div id="clock">00:00:00</div>
+            <div id="date"></div>
+        </div>
+
+
+        <div id="worldTab" class="content">
+            <h2>🌍 World Clock</h2>
+            <div class="world-grid" id="worldList"></div>
+        </div>
+
+
+        <div id="alarmTab" class="content">
+            <h2>⏰ Alarm</h2>
+            <input type="time" id="alarmTime">
+            <button onclick="setAlarm()">Set Alarm</button>
+            <div id="alarmMsg"></div>
+        </div>
+
+
+        <div id="stopwatchTab" class="content">
+            <h2>⏱ Stopwatch</h2>
+            <div id="stopwatch">00:00:00</div>
+            <button onclick="startStopwatch()">Start</button>
+            <button onclick="stopStopwatch()">Stop</button>
+            <button onclick="resetStopwatch()">Reset</button>
+        </div>
+
+
+        <div id="timerTab" class="content">
+            <h2>⌛ Timer</h2>
+            <input type="number" id="timerInput" placeholder="Seconds">
+            <button onclick="startTimer()">Start</button>
+            <div id="timerDisplay">00:00</div>
+        </div>
+
+
+        <div id="aiTab" class="content">
+            <h2>🤖 AI Assistant</h2>
+            <div id="chatbox"></div>
+            <input id="userInput" placeholder="Ask me about time..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            let now = new Date();
+            document.getElementById("clock").textContent = now.toLocaleTimeString();
+            document.getElementById("date").textContent = now.toDateString();
+        }
+        setInterval(updateClock, 1000); updateClock();
+
+        /* -------- Tabs -------- */
+        function switchTab(tab) {
+            document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+            event.target.classList.add("active");
+            document.querySelectorAll(".content").forEach(c => c.classList.remove("active"));
+            document.getElementById(tab + "Tab").classList.add("active");
+        }
+
+        /* -------- World Clock -------- */
+        const cities = [
+            { name: "New York", zone: "America/New_York" },
+            { name: "London", zone: "Europe/London" },
+            { name: "Tokyo", zone: "Asia/Tokyo" },
+            { name: "Sydney", zone: "Australia/Sydney" },
+            { name: "India", zone: "Asia/Kolkata" }
+        ];
+        const worldList = document.getElementById("worldList");
+        cities.forEach(city => {
+            let card = document.createElement("div");
+            card.className = "world-card";
+            card.innerHTML = `<div class="city-name">${city.name}</div>
+        <canvas id="analog-${city.zone}" width="180" height="180"></canvas>
+        <div class="digital" id="digital-${city.zone}"></div>`;
+            worldList.appendChild(card);
+
+            setInterval(() => {
+                let now = new Date();
+                let time = new Date(now.toLocaleString("en-US", { timeZone: city.zone }));
+                document.getElementById(`digital-${city.zone}`).textContent = time.toLocaleTimeString();
+                drawClock(`analog-${city.zone}`, time);
+            }, 1000);
+        });
+
+        function drawClock(canvasId, time) {
+            let canvas = document.getElementById(canvasId);
+            let ctx = canvas.getContext("2d");
+            let radius = canvas.height / 2;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.translate(radius, radius);
+            radius = radius * 0.9;
+            drawFace(ctx, radius);
+            drawNumbers(ctx, radius);
+            drawTime(ctx, time, radius);
+            ctx.translate(-canvas.height / 2, -canvas.height / 2);
+        }
+        function drawFace(ctx, radius) {
+            ctx.beginPath();
+            ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+            ctx.fillStyle = "rgba(255,255,255,0.2)";
+            ctx.fill();
+            ctx.stroke();
+        }
+        function drawNumbers(ctx, radius) {
+            ctx.font = radius * 0.15 + "px arial";
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "center";
+            for (let num = 1; num < 13; num++) {
+                let ang = num * Math.PI / 6;
+                ctx.rotate(ang);
+                ctx.translate(0, -radius * 0.85);
+                ctx.rotate(-ang);
+                ctx.fillText(num.toString(), 0, 0);
+                ctx.rotate(ang);
+                ctx.translate(0, radius * 0.85);
+                ctx.rotate(-ang);
+            }
+        }
+        function drawTime(ctx, time, radius) {
+            let hour = time.getHours();
+            let minute = time.getMinutes();
+            let second = time.getSeconds();
+            // Hour
+            hour = hour % 12;
+            hour = (hour * Math.PI / 6) + (minute * Math.PI / (6 * 60)) + (second * Math.PI / (360 * 60));
+            drawHand(ctx, hour, radius * 0.5, radius * 0.07);
+            // Minute
+            minute = (minute * Math.PI / 30) + (second * Math.PI / (30 * 60));
+            drawHand(ctx, minute, radius * 0.8, radius * 0.07);
+            // Second
+            second = (second * Math.PI / 30);
+            drawHand(ctx, second, radius * 0.9, radius * 0.02, "red");
+        }
+        function drawHand(ctx, pos, length, width, color = "#fff") {
+            ctx.beginPath();
+            ctx.lineWidth = width;
+            ctx.lineCap = "round";
+            ctx.moveTo(0, 0);
+            ctx.rotate(pos);
+            ctx.strokeStyle = color;
+            ctx.lineTo(0, -length);
+            ctx.stroke();
+            ctx.rotate(-pos);
+        }
+
+        /* -------- Alarm -------- */
+        let alarmTime = null;
+        function setAlarm() {
+            alarmTime = document.getElementById("alarmTime").value;
+            document.getElementById("alarmMsg").textContent = "Alarm set for " + alarmTime;
+        }
+        setInterval(() => {
+            if (alarmTime) {
+                let now = new Date();
+                let current = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
+                if (current === alarmTime) { alert("⏰ Alarm Ringing!"); alarmTime = null; }
+            }
+        }, 1000);
+
+        /* -------- Stopwatch -------- */
+        let swInterval, swSeconds = 0;
+        function updateStopwatch() {
+            let h = Math.floor(swSeconds / 3600);
+            let m = Math.floor((swSeconds % 3600) / 60);
+            let s = swSeconds % 60;
+            document.getElementById("stopwatch").textContent = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+        }
+        function startStopwatch() { if (!swInterval) swInterval = setInterval(() => { swSeconds++; updateStopwatch(); }, 1000); }
+        function stopStopwatch() { clearInterval(swInterval); swInterval = null; }
+        function resetStopwatch() { stopStopwatch(); swSeconds = 0; updateStopwatch(); }
+        updateStopwatch();
+
+        /* -------- Timer -------- */
+        let timerInterval;
+        function startTimer() {
+            let secs = parseInt(document.getElementById("timerInput").value) || 0;
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                if (secs <= 0) { clearInterval(timerInterval); alert("⌛ Time's up!"); }
+                else {
+                    secs--; let m = Math.floor(secs / 60), s = secs % 60;
+                    document.getElementById("timerDisplay").textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+                }
+            }, 1000);
+        }
+
+        /* -------- AI Assistant -------- */
+        function sendMessage() {
+            let input = document.getElementById("userInput").value;
+            if (!input) return;
+            let chat = document.getElementById("chatbox");
+            chat.innerHTML += `<div class="msg user">${input}</div>`;
+            let response = "";
+            if (input.toLowerCase().includes("time")) response = "⏰ Current time: " + new Date().toLocaleTimeString();
+            else if (input.toLowerCase().includes("date")) response = "📅 Today: " + new Date().toDateString();
+            else response = "🤖 I'm your time assistant! Ask me about time or date.";
+            chat.innerHTML += `<div class="msg bot">${response}</div>`;
+            document.getElementById("userInput").value = "";
+            chat.scrollTop = chat.scrollHeight;
+        }
+    </script>
+</body>
+
+</html>
