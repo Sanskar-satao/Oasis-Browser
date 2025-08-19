@@ -420,10 +420,30 @@
                 transform 0.14s,
                 backdrop-filter 0.23s;
         }
+
+        .top-bar {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 15px;
+            padding: 10px 20px;
+            display: flex;
+            gap: 20px;
+            color: #fff;
+            font-weight: 700;
+            border: white 1px solid;
+            box-shadow: 0 0 30px rgb(255, 255, 255);
+        }
     </style>
 </head>
 
 <body>
+    <div class="top-bar">
+        <span id="weather">☀️ 29°C</span><span id="clock">🕒 10:45 PM</span><span id="battery">🔋 85%</span><spanid="network">📶 Online</span>
+    </div>
     <div class="glass-card">
         <h1>Oasis</h1>
         <form id="searchForm">
@@ -433,10 +453,10 @@
     </div>
     <div class="ai-mode-btn">
         <button onclick="openAIMode()" class="ai-btn" aria-label="AI Mode">
-            <span>🧠 AI-Mode</span>
+            <span>🧠 AI Mode</span>
         </button>
         <button onclick="openOasisMaps()" class="Oasis-Maps-btn" aria-label="Oasis Maps">
-            <span>🗺️ Oasis-Maps</span>
+            <span>🗺️ Oasis Maps</span>
         </button>
         <!-- Analog Clock -->
         <div class="glass-clock">
@@ -446,7 +466,8 @@
                 <div class="hand second" id="second-hand"></div>
                 <div class="center-dot"></div>
             </div>
-            <div class="digital-time" id="digital-time"></div>
+            <div class="clockTrigger" id="digital-time"></div>
+
         </div>
 
     </div>
@@ -480,6 +501,24 @@
     </div>
 
     <script>
+        function updateClock() {
+            document.getElementById("clock").innerText = "🕒 " + new Date().toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000);
+
+        navigator.getBattery().then(b => {
+            setInterval(() => {
+                document.getElementById("battery").innerText = "🔋 " + Math.floor(b.level * 100) + "%";
+            }, 1000);
+        });
+
+
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("clockTrigger")) {
+                window.open("clock.html", "_blank"); // open in a new tab
+            }
+        });
+
         function toggleDropdown() {
             document.getElementById("dropdownMenu").classList.toggle("show");
         }
@@ -489,7 +528,7 @@
             }
         }
         function openAIMode() {
-            window.open("AI Mode.html", "_blank");
+            window.open("AI-Mode.html", "_blank");
         }
         function openOasisMaps() {
             window.open("Oasis Maps.html", "_blank");
@@ -570,4 +609,3 @@
 </body>
 
 </html>
-
