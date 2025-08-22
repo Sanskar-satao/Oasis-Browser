@@ -20,23 +20,80 @@
             justify-content: flex-start;
         }
 
-        .glass-card {
-            margin-top: 120px;
-            background: rgba(0, 0, 0, 0);
-            border-radius: 80px;
+        .url-bar {
+            position: fixed;
+            top: 25px;
+            left: 770px;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: top;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 0px solid #000000;
+            border-radius: 25px;
+            padding: 8px 10px;
             box-shadow: 0 0 25px rgb(255, 255, 255);
             backdrop-filter: blur(3px);
             -webkit-backdrop-filter: blur(32px);
-            padding: 50px 80px 40px 60px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .url-bar:hover {
+            box-shadow: 0 0 50px rgb(0, 0, 0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .url-bar input {
+            flex: 1;
+            padding: 15px 15px;
+            font-size: 1rem;
+            border: none;
+            outline: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.275);
+            color: #fff;
+            width: 650px;
+        }
+
+        .url-bar input::placeholder {
+            color: #ddd;
+        }
+
+        .url-bar button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #0800ffb3 0%, #ff0000b7 100%);
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s ease;
+        }
+
+        .url-bar button:hover {
+            transition: all 0.3s ease;
+            padding: 10px 50px;
+            box-shadow: 0 0 12px #59bbf5;
+        }
+
+        .glass-card {
+            margin-top: 150px;
+            background: rgba(0, 0, 0, 0);
+            border-radius: 80px;
+            box-shadow: 0 0 30px rgb(255, 255, 255);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(32px);
+            padding: 50px 80px 80px 60px;
             min-width: 420px;
             max-width: 140vw;
-            border: white 2px solid;
+            border: white 0px solid;
             transition: transform 0.5s ease, box-shadow 0.3s ease
         }
 
         .glass-card:hover {
             box-shadow: 0px 0px 50px rgb(0, 0, 0);
-            border: 1px solid rgb(255, 255, 255);
+            border: 0px solid rgb(255, 255, 255);
             transform: scale(1.0);
             transition: transform 0.5s ease, box-shadow 0.3s ease;
         }
@@ -188,7 +245,7 @@
             display: none;
             position: absolute;
             right: 0;
-            top: 60px;
+            top: 85px;
             min-width: 120px;
             background-color: rgba(27, 46, 81, 0);
             backdrop-filter: blur(5px);
@@ -255,7 +312,7 @@
 
         .ai-mode-btn {
             position: fixed;
-            top: 30px;
+            top: 60px;
             left: 42px;
             z-index: 998;
         }
@@ -392,6 +449,8 @@
 
 
         .Oasis-Maps-btn {
+            left: 32px;
+            top: 25px;
             background: rgba(255, 255, 255, 0.15);
             border: 2px solid #85e6ff;
             border-radius: 25px;
@@ -520,7 +579,7 @@
             }
 
             .glass-card {
-                margin-left: 101px;
+                margin-left: 95px;
                 margin-top: 10px;
                 width: 115%;
                 border-radius: 1px;
@@ -532,24 +591,6 @@
                 height: 35px;
                 filter: invert(1) drop-shadow(0 0 8px #fff8);
                 margin-top: 1px;
-            }
-
-
-            .top-bar {
-                position: fixed;
-                top: 1100px;
-                left: 450%;
-                transform: translateX(-50%);
-                background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(8px);
-                border-radius: 15px;
-                padding: 10px 20px;
-                display: flex;
-                gap: 20px;
-                color: #fff;
-                font-weight: 700;
-                border: white 1px solid;
-                box-shadow: 0 0 5px rgb(255, 255, 255);
             }
 
             .glass-clock {
@@ -647,8 +688,9 @@
 </head>
 
 <body>
-    <div class="top-bar">
-        <span id="battery">🔋 85%</span>
+    <div class="url-bar">
+        <input type="text" id="urlInput" placeholder="Enter URL (https://...)" />
+        <button onclick="openURL()">Go</button>
     </div>
     <div class="glass-card">
         <h1>Oasis</h1>
@@ -664,9 +706,6 @@
         🤖
     </div>
     <div class="ai-mode-btn">
-        <button onclick="openAIMode()" class="ai-btn" aria-label="AI Mode">
-            <span>🧠 AI Mode</span>
-        </button>
         <button onclick="openOasisMaps()" class="Oasis-Maps-btn" aria-label="Oasis Maps">
             <span>🗺️ Oasis Maps</span>
         </button>
@@ -714,10 +753,14 @@
     <canvas id="particleCanvas" style="position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1;"></canvas>
 
     <script>
-
-        fetch("https://wttr.in/?format=%C+%t")
-            .then(res => res.text())
-            .then(data => document.getElementById("weatherHUD").textContent = "📍 " + data);
+        function openURL() {
+            let url = document.getElementById("urlInput").value.trim();
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                url = "https://" + url; // auto-fix
+            }
+            window.open(url, "_blank");
+            document.getElementById("urlInput").value = "";
+        }
 
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.key.toLowerCase() === 'm') voiceBtn.click();
@@ -729,11 +772,6 @@
         }
         setInterval(updateClock, 1000);
 
-        navigator.getBattery().then(b => {
-            setInterval(() => {
-                document.getElementById("battery").innerText = "🔋 " + Math.floor(b.level * 100) + "%";
-            }, 1000);
-        });
         function startVoiceRecognition() {
             const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
             recognition.lang = 'en-US';
