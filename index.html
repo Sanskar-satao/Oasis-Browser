@@ -464,7 +464,7 @@
             text-shadow: 0 0 16px #ffe07080, 0 1px 0 #fff;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 495px) and (max-height: 900px) {
             body {
                 width: 500px;
                 align-content: flex-end;
@@ -486,6 +486,21 @@
                 margin-right: 12px;
                 transition: 0.25s;
                 outline: none;
+            }
+
+            #voiceBtn {
+                padding: 12px 16px;
+                margin-left: 10px;
+                border-radius: 20px;
+                border: 2px solid #85e6ff;
+                background: rgba(255, 255, 255, 0.15);
+                color: #fff;
+                cursor: pointer;
+                font-size: 1rem;
+                font-weight: 600;
+                box-shadow: 0 2px 6px #0004;
+                backdrop-filter: blur(5px);
+                transition: all 0.25s ease-in-out;
             }
 
             form input[type="submit"] {
@@ -624,9 +639,7 @@
 
 <body>
     <div class="top-bar">
-        <div id="weatherHUD">🌤️ Loading...</div>
-        <span id="clock">🕒 10:45 PM</span><span id="battery">🔋 85%</span>
-        <spanid="network">📶 Online</span>
+        <span id="battery">🔋 85%</span>
     </div>
     <div class="glass-card">
         <h1>Oasis</h1>
