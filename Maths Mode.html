@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oasis-Maths</title>
+    <style>
+        /* ---------- General Styles ---------- */
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background: url("https://static.vecteezy.com/system/resources/previews/021/171/680/large_2x/colorful-abstract-wallpaper-modern-background-ai-generated-free-photo.jpg") no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* ---------- Sidebar ---------- */
+        .sidebar {
+            width: 260px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(45deg, cyan, magenta);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tab {
+            margin: 10px 0;
+            padding: 14px;
+            border-radius: 15px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: rgba(0, 255, 255, 0.25);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        button.sidebar-btn {
+            margin-top: auto;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: bold;
+            border: none;
+            background: rgba(0, 255, 255, 0.2);
+            color: #fff;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button.sidebar-btn:hover {
+            background: rgba(0, 255, 255, 0.35);
+        }
+
+        /* ---------- Content Area ---------- */
+        .content-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        .content {
+            display: none;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 25px;
+            padding: 30px;
+            width: 85%;
+            max-width: 950px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.6s ease;
+            margin-bottom: 30px;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ---------- Cards ---------- */
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 15px auto;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        /* ---------- Inputs & Buttons ---------- */
+        input,
+        select,
+        button,
+        textarea {
+            padding: 12px;
+            margin: 10px 0;
+            width: 100%;
+            font-size: 1rem;
+            border-radius: 12px;
+            border: none;
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: rgba(0, 255, 255, 0.3);
+        }
+
+        /* Dropdown fix */
+        select {
+            appearance: none;
+            background: rgba(0, 0, 0, 0.4);
+            color: #fff;
+            padding-right: 35px;
+            position: relative;
+        }
+
+        select:focus {
+            background: rgba(0, 255, 255, 0.25);
+            color: #000;
+        }
+
+        select::after {
+            content: "▼";
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #fff;
+            font-size: 0.8rem;
+        }
+
+        /* ---------- Quiz Elements ---------- */
+        .quiz-question {
+            margin: 15px 0;
+            text-align: left;
+            padding: 15px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .quiz-options button {
+            width: 100%;
+            text-align: left;
+            padding: 14px;
+            font-size: 16px;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-options button:hover {
+            transform: scale(1.03);
+            background: rgba(0, 255, 255, 0.25);
+        }
+
+        .feedback {
+            margin-top: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        /* Progress bar */
+        .progress {
+            height: 22px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, cyan, magenta);
+            transition: width 0.3s;
+        }
+
+        .timer {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* ---------- Modal ---------- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            margin: 10% auto;
+            padding: 25px;
+            border-radius: 20px;
+            width: 70%;
+            max-width: 800px;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.6);
+            color: #fff;
+            text-align: center;
+        }
+
+        .close {
+            color: #fff;
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: red;
+        }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                padding: 10px;
+            }
+
+            .tab {
+                font-size: 0;
+                padding: 12px;
+            }
+
+            .tab::before {
+                font-size: 20px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .content {
+                width: 95%;
+                padding: 20px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <h1 class="logo">🌌 Maths Mode</h1>
+        <div class="tab active" onclick="switchTab('solve')">📝 Solve Mode</div>
+        <div class="tab" onclick="switchTab('quiz')">🎯 MCQ Quiz</div>
+        <div class="tab" onclick="switchTab('tools')">🛠 Tools</div>
+        <div class="tab" onclick="switchTab('leaderboard')">🏆 Leaderboard</div>
+        <div class="tab" onclick="switchTab('profile')">👤 Profile</div>
+        <div class="tab" onclick="switchTab('settings')">⚙️ Settings</div>
+        <button class="sidebar-btn" onclick="toggleDarkMode()">🌙 Dark/Light Mode</button>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content-area">
+        <div id="toolsTab" class="content">
+            <div class="card">
+                <h2>🛠 Math Tools</h2>
+                <button onclick="openUnitConverter()">Unit Converter</button>
+                <button onclick="openFormulaSheet()">Formula Sheet</button>
+                <button onclick="openNotes()">Notes</button>
+                <button onclick="openDrawing()">Drawing Board</button>
+                <div id="toolContainer"></div>
+            </div>
+        </div>
+
+        <!-- Solve Mode -->
+        <div id="solveTab" class="content active">
+            <div class="card">
+                <h2>📝 Solve a Problem</h2>
+                <textarea id="question" rows="2" placeholder="e.g., (5 * (3 + 2)) / 4"></textarea>
+                <button onclick="solveProblem()">Solve Step by Step</button>
+                <div class="solution" id="solution"></div>
+            </div>
+        </div>
+
+        <!-- Quiz Mode -->
+        <div id="quizTab" class="content">
+            <div class="card">
+                <h2>🎯 Oasis Quiz Master</h2>
+
+                <label for="class">Class/Grade:</label>
+                <select id="class">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+
+                <label for="numQuestions">Number of Questions:</label>
+                <input type="number" id="numQuestions" min="1" max="50" value="5">
+
+                <label for="qType">Question Type:</label>
+                <select id="qType">
+                    <option value="mcq">MCQ</option>
+                    <option value="tf">True/False</option>
+                    <option value="match">Match the Following</option>
+                </select>
+
+                <label for="difficulty">Difficulty:</label>
+                <select id="difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+
+                <button onclick="generateQuiz()">🚀 Start Quiz</button>
+
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div id="quizTimer" class="timer"></div>
+                <div id="quizQuestions"></div>
+                <div class="solution" id="quizResult"></div>
+            </div>
+        </div>
+
+        <!-- Tools Section -->
+        <div id="toolsTab" class="content">
+            <div class="card">
+                <h2>🛠 Math Tools</h2>
+                <button onclick="openTool('calculator')">Calculator</button>
+                <button onclick="openTool('unitConverter')">Unit Converter</button>
+                <button onclick="openTool('formulaSheet')">Formula Sheet</button>
+                <button onclick="openTool('drawingBoard')">Drawing Board</button>
+                <button onclick="openTool('notes')">Notes</button>
+            </div>
+        </div>
+
+        <!-- Leaderboard -->
+        <div id="leaderboardTab" class="content">
+            <div class="card">
+                <h2>🏆 Leaderboard</h2>
+                <ul id="leaderboardList"></ul>
+            </div>
+        </div>
+
+        <!-- Profile -->
+        <div id="profileTab" class="content">
+            <div class="card">
+                <h2>👤 Profile</h2>
+                <label>Username:</label>
+                <input type="text" id="username" placeholder="Enter your name">
+                <label>Avatar:</label>
+                <select id="avatarSelect">
+                    <option value="🧑">🧑</option>
+                    <option value="👩">👩</option>
+                    <option value="🦸">🦸</option>
+                    <option value="🐱">🐱</option>
+                    <option value="🐶">🐶</option>
+                </select>
+                <button onclick="saveProfile()">Save Profile</button>
+                <div id="profileDisplay"></div>
+            </div>
+        </div>
+
+        <!-- Settings -->
+        <div id="settingsTab" class="content">
+            <div class="card">
+                <h2>⚙️ Settings</h2>
+                <button onclick="switchBackground()">Change Background</button>
+                <button onclick="toggleHighContrast()">High Contrast</button>
+                <button onclick="toggleSound()">🔊 Toggle Sound</button>
+                <label>Font Size:</label>
+                <input type="range" min="14" max="28" value="16" id="fontSizeSlider"
+                    oninput="adjustFontSize(this.value)">
+                <label>Language:</label>
+                <select id="languageSelect" onchange="switchLanguage(this.value)">
+                    <option value="en">English</option>
+                    <option value="hi">Hindi</option>
+                    <option value="es">Spanish</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Tool Modals -->
+    <div id="toolModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="toolContainer"></div>
+        </div>
+    </div>
+    <script src="maths-script.js"></script>
+
+</body>
+
+</html>
