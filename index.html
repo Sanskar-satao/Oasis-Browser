@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oasis Tab</title>
+    <title>Oasis Browser</title>
     <style>
         body {
             font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
             margin: 0;
             min-height: 100vh;
-            background: linear-gradient(115deg, rgba(255, 250, 100, 0), rgba(255, 187, 109, 0)),
-                url(https://static.vecteezy.com/system/resources/previews/021/171/680/large_2x/colorful-abstract-wallpaper-modern-background-ai-generated-free-photo.jpg) no-repeat center center fixed;
+            background: linear-gradient(115deg, rgba(255, 250, 100, 0), rgba(255, 187, 109, 0)), url(https://wallpaperbat.com/img/77770488-brave-browser-wallpaper.jpg) no-repeat center center fixed;
             background-size: cover;
             color: #fff;
             display: flex;
@@ -32,12 +31,13 @@
             border: 0px solid #000000;
             border-radius: 25px;
             padding: 8px 10px;
-            box-shadow: 0 0 25px rgb(255, 255, 255);
-            backdrop-filter: blur(3px);
+            box-shadow: 0 0 0px rgb(255, 255, 255);
+            backdrop-filter: blur(5px) saturate(180%);
             -webkit-backdrop-filter: blur(32px);
             z-index: 1000;
             transition: all 0.3s ease;
         }
+
         .url-bar:hover {
             box-shadow: 0 0 50px rgb(0, 0, 0);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -81,13 +81,14 @@
             margin-top: 150px;
             background: rgba(0, 0, 0, 0);
             border-radius: 80px;
-            box-shadow: 0 0 30px rgb(255, 255, 255);
-            backdrop-filter: blur(3px);
-            -webkit-backdrop-filter: blur(32px);
+            box-shadow: 0 0 15px rgb(0, 0, 0);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
             padding: 50px 80px 80px 60px;
             min-width: 420px;
             max-width: 140vw;
-            border: white 0px solid;
             transition: transform 0.5s ease, box-shadow 0.3s ease
         }
 
@@ -248,7 +249,7 @@
             top: 85px;
             min-width: 120px;
             background-color: rgba(27, 46, 81, 0);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px) saturate(180%);
             border-radius: 18px;
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.36);
             padding: 17px 18px 10px 18px;
@@ -350,137 +351,6 @@
                 backdrop-filter 0.23s;
         }
 
-        .glass-clock {
-            margin-top: 30px;
-            width: 107px;
-            padding: 15px 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0);
-            backdrop-filter: blur(3px);
-            -webkit-backdrop-filter: blur(32px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            transition: 0.2s ease;
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
-            border: 1px solid rgb(255, 255, 255);
-        }
-
-        .clock {
-            width: 120px;
-            height: 120px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            position: relative;
-            transition: 0.2s ease;
-            background-color: rgba(0, 0, 0, 0);
-        }
-
-        .clock:hover {
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
-            transform: scale(0.8);
-            transition: 0.2s ease;
-            border: 2px solid rgb(255, 255, 255);
-        }
-
-        .glass-clock:hover {
-            box-shadow: 0 0 45px rgb(0, 0, 0);
-            transform: scale(1.1);
-            transition: 0.2s ease;
-            border: 2px solid rgb(255, 255, 255);
-        }
-
-        .hand {
-            position: absolute;
-            bottom: 50%;
-            left: 50%;
-            transform-origin: bottom center;
-            transform: translateX(-50%) rotate(90deg);
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 2px;
-        }
-
-        .hand.hour {
-            width: 4px;
-            height: 30px;
-            background: rgb(255, 242, 0);
-        }
-
-        .hand.minute {
-            width: 3px;
-            height: 40px;
-            background: rgb(255, 255, 255);
-        }
-
-        .hand.second {
-            width: 2px;
-            height: 45px;
-            background: rgb(0, 0, 255);
-        }
-
-        .center-dot {
-            width: 8px;
-            height: 8px;
-            background: rgb(0, 0, 0);
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .digital-time {
-            margin-top: 10px;
-            font-size: 16px;
-            font-weight: 500;
-            color: white;
-            text-shadow: 0 0px 10px rgba(255, 255, 255, 0.4);
-            letter-spacing: 1px;
-        }
-
-        .Oasis-Maps-btn {
-            position: fixed;
-            top: 30px;
-            left: 185px;
-            z-index: 998;
-        }
-
-
-        .Oasis-Maps-btn {
-            left: 32px;
-            top: 25px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 2px solid #85e6ff;
-            border-radius: 25px;
-            padding: 10px 18px;
-            font-weight: 600;
-            font-size: 1rem;
-            color: #ffffff;
-            cursor: pointer;
-            box-shadow: 0 2px 6px #0004;
-            backdrop-filter: blur(5px);
-            transition: all 0.2s ease-in-out;
-        }
-
-        .Oasis-Maps-btn:hover {
-            background: linear-gradient(90deg, rgba(135, 247, 255, 0.35) 0%, rgba(255, 255, 140, 0.22) 100%);
-            color: #222;
-            border-color: #fffa60;
-            transform: scale(1.12) translateY(-2px);
-            box-shadow: 0 0 10px #59bbf5, 0 0 8px #fff9, 0 3px 18px #20c4f380;
-            backdrop-filter: blur(4px) brightness(108%);
-            filter: drop-shadow(0 0 12px #fffe);
-            text-shadow: 0 0 16px #ffe07080, 0 1px 0 #fff;
-            transition:
-                background 0.35s cubic-bezier(.5, 1.2, .7, 1),
-                color 0.21s,
-                border 0.21s,
-                box-shadow 0.24s,
-                transform 0.14s,
-                backdrop-filter 0.23s;
-        }
 
         .top-bar {
             position: fixed;
@@ -523,416 +393,443 @@
             text-shadow: 0 0 16px #ffe07080, 0 1px 0 #fff;
         }
 
-        @media (max-width: 495px) and (max-height: 900px) {
-            body {
-                width: 500px;
-                align-content: flex-end;
-            }
+        /* Search Mode */
+        .search-mode .search-bar-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 700px;
+            z-index: 999;
+        }
 
-            form input[type="text"] {
-                margin-top: 10px;
-                padding: 30px 50px;
-                width: 300px;
-                font-size: 1.2rem;
-                border-radius: 14px;
-                border: 2.5px solid #60baff;
-                background: rgba(255, 255, 255, 0);
-                backdrop-filter: blur(1px);
-                color: #222;
-                box-shadow: 0 2px 7px rgba(77, 165, 255, 0.15);
-                font-style: italic;
-                margin-bottom: 1.2em;
-                margin-right: 12px;
-                transition: 0.25s;
-                outline: none;
-            }
+        /* hide all contant except search results */
+        .search-mode #mainContent {
+            display: none;
+        }
+
+        .search-mode #results {
+            margin-top: 80px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+        }
+
+        #searchBox {
+            margin: 20px;
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+        }
+
+        #results {
+            margin-top: 90px;
+            padding: 20px;
+            font-family: "Segoe UI", sans-serif;
+            color: #fff;
+        }
+
+        .result-item {
+            background: rgba(0, 0, 0, 0.425);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            transition: all 0.25s ease-in-out;
+            cursor: pointer;
+            backdrop-filter: blur(5px) saturate(180%);
+        }
+
+        .result-item:hover {
+            background: rgba(0, 0, 0, 0.59);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+        }
+
+        .result-item a {
+            font-size: 18px;
+            font-weight: 600;
+            color: #4da6ff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .result-item a:hover {
+            color: #82c4ff;
+        }
+
+        .result-item p {
+            font-size: 14px;
+            color: #ddd;
+            margin-top: 6px;
+        }
 
 
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 80%;
+            max-width: 700px;
+            height: 38px;
+            padding: 10px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(6px);
+        }
 
-            #voiceBtn {
-                padding: 12px 16px;
-                margin-left: 10px;
-                border-radius: 20px;
-                border: 2px solid #85e6ff;
-                background: rgba(255, 255, 255, 0.15);
-                color: #fff;
-                cursor: pointer;
-                font-size: 1rem;
-                font-weight: 600;
-                box-shadow: 0 2px 6px #0004;
-                backdrop-filter: blur(5px);
-                transition: all 0.25s ease-in-out;
-            }
+        .search-bar input[type="text"] {
+            flex: 1;
+            padding: 12px 15px;
+            font-size: 1.1rem;
+            border-radius: 14px;
+            border: 2px solid #60baff;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            box-shadow: 0 2px 7px rgba(77, 165, 255, 0.2);
+            font-style: italic;
+            transition: 0.25s;
+            outline: none;
+        }
 
-            form input[type="submit"] {
-                padding: 1.1em 2.5em;
-                font-size: 1.15rem;
-                font-weight: 600;
-                border-radius: 40px;
-                background: linear-gradient(90deg, #0800ffb3 0%, #ff0000b7 100%);
-                color: #fff;
-                border: none;
-                box-shadow: 0 6px 25px rgba(255, 255, 255, 0.15);
-                margin-left: 0.5em;
-                cursor: pointer;
-                transition: all 0.26s cubic-bezier(0.47, 0.06, 0.52, 1.7), box-shadow 0.11s;
-            }
+        .search-bar button,
+        .search-bar input[type="submit"] {
+            padding: 10px 18px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #0800ffb3 0%, #ff0000b7 100%);
+            color: #fff;
+            border: none;
+            box-shadow: 0 6px 25px rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-            .glass-card {
-                margin-left: 95px;
-                margin-top: 10px;
-                width: 115%;
-                border-radius: 1px;
-                top: 100px;
-            }
+        .search-bar button:hover,
+        .search-bar input[type="submit"]:hover {
+            transition: all 0.3s ease;
+            padding: 10px 50px;
+            box-shadow: 0 0 12px #59bbf5;
+        }
 
-            .menu-icon {
-                width: 44px;
-                height: 35px;
-                filter: invert(1) drop-shadow(0 0 8px #fff8);
-                margin-top: 1px;
-            }
+        #Oasis-Maps-btn:hover,
+        #maths-mode-btn:hover,
+        #Oasis-Clock-btn:hover,
+        #aiAvatar:hover {
+            box-shadow: 0 0 20px #000000, 0 0 12px #fff9, 0 3px 18px #20c4f380;
+            transform: scale(1.2);
+            transition: all 0.3s ease;
+        }
 
-            .glass-clock {
-                margin-top: 9600px;
-                margin-left: 450px;
-                width: 107px;
-                padding: 15px 10px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                border-radius: 20px;
-                background: rgba(255, 255, 255, 0);
-                backdrop-filter: blur(3px);
-                -webkit-backdrop-filter: blur(32px);
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-                transition: 0.2s ease;
-                box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
-                border: 1px solid rgb(255, 255, 255);
-            }
+        .APPS {
+            position: fixed;
+            padding: 105px 75px;
+            top: 20px;
+            left: 20px;
+            border-radius: 20px;
+            box-shadow: rgb(0, 0, 0) 0px 0px 20px;
+            transition: all 0.3s ease;
+        }
 
-            .Oasis-Maps-btn {
-                background: rgba(255, 255, 255, 0.15);
-                border: 2px solid #85e6ff;
-                border-radius: 25px;
-                padding: 10px 18px;
-                font-weight: 600;
-                font-size: 1rem;
-                color: #ffffff;
-                cursor: pointer;
-                box-shadow: 0 2px 6px #0004;
-                backdrop-filter: blur(5px);
-            }
-
-            .clock {
-                width: 120px;
-                height: 120px;
-                border: 2px solid rgba(255, 255, 255, 0.3);
-                border-radius: 50%;
-                position: relative;
-                transition: 0.2s ease;
-                background-color: rgba(0, 0, 0, 0);
-            }
-
-            .hand {
-                position: absolute;
-                bottom: 50%;
-                left: 50%;
-                transform-origin: bottom center;
-                transform: translateX(-50%) rotate(90deg);
-                background: rgba(255, 255, 255, 0.9);
-                border-radius: 2px;
-            }
-
-            .hand.hour {
-                width: 4px;
-                height: 30px;
-                background: rgb(255, 242, 0);
-            }
-
-            .hand.minute {
-                width: 3px;
-                height: 40px;
-                background: rgb(255, 255, 255);
-            }
-
-            .hand.second {
-                width: 2px;
-                height: 45px;
-                background: rgb(0, 0, 255);
-            }
-
-            .center-dot {
-                width: 8px;
-                height: 8px;
-                background: rgb(0, 0, 0);
-                border-radius: 50%;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
-
-            .digital-time {
-                margin-top: 10px;
-                font-size: 16px;
-                font-weight: 500;
-                color: white;
-                text-shadow: 0 0px 10px rgba(255, 255, 255, 0.4);
-                letter-spacing: 1px;
-            }
-
+        .APPS:hover {
+            transition: all 0.3s ease;
+            box-shadow: rgb(2, 225, 255) 0 0 40px;
         }
     </style>
 </head>
 
 <body>
-    <div class="url-bar">
-        <input type="text" id="urlInput" placeholder="Enter URL (https://...)" />
-        <button onclick="openURL()">Go</button>
+    <div id="homepage">
+        <!-- Main Glass Card -->
+        <div class="glass-card">
+            <h1>Oasis</h1>
+            <form id="searchForm">
+                <input type="text" id="searchInput" placeholder="Search anything here..." required>
+                <button type="button" id="voiceBtn">🎤</button>
+                <input type="submit" value="Search">
+            </form>
+        </div>
+
+        <!-- URL Bar -->
+        <div class="url-bar">
+            <input type="text" id="urlInput" placeholder="Enter URL (https://...)">
+            <button onclick="openURL()">Go</button>
+        </div>
+
+        <!-- Loader -->
+        <div id="loader" style="display:none; text-align:center; margin-top:20px; color:#fff;">Loading...</div>
+
+        <!----APPS---->
+        <div class="APPS">
+
+            <!-- Maths Mode Button -->
+            <div id="maths-mode-btn" onclick="openMathsMode()"
+                style="transition : all 0.3s ease; position: fixed; top: 89.5px; left: 65px; width:60px; height:60px; background:#85e6ff; border-radius:50%; display:flex; justify-content:center; align-items:center; cursor:pointer; box-shadow:0 0 20px #85e6ff;">
+                ➗
+            </div>
+
+            <!--oasis maps-->
+            <div id="Oasis-Maps-btn" onclick="openOasisMaps()"
+                style="transition : all 0.3s ease; position: fixed; top: 30px; left: 99px; width:60px; height:60px; background:#85e6ff; border-radius:50%; display:flex; justify-content:center; align-items:center; cursor:pointer; box-shadow:0 0 20px #85e6ff;">
+                🗺️
+            </div>
+
+            <!--Oasis Clock-->
+            <div id="Oasis-Clock-btn" onclick="openOasisClock()"
+                style="transition : all 0.3s ease; position: fixed; top: 158px; left: 65px; width:60px; height:60px; background:#85e6ff; border-radius:50%; display:flex; justify-content:center; align-items:center; cursor:pointer; box-shadow:0 0 20px #85e6ff;">
+                🕒
+            </div>
+
+        </div>
+
+        <!-- Dropdown Menu -->
+        <div class="dropdown">
+            <button onclick="toggleDropdown()" class="dropdown-btn" aria-label="Open menu">
+                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828859.png" alt="Menu" class="menu-icon">
+            </button>
+            <div id="dropdownMenu" class="dropdown-content">
+                <a href="https://sanskar-satao.github.io/Oasis-Photos/" target="_blank">
+                    <img src="https://images-workbench.99static.com/ySxJl7wz7CuA_VXXMjdM2ac9RqM=/99designs-contests-attachments/80/80341/attachment_80341132"
+                        alt="Oasis-Photos">
+                </a>
+                <a href="https://web.whatsapp.com/" target="_blank">
+                    <img src="https://i.pinimg.com/736x/c6/d8/01/c6d80112426e35a0dc293bf68e65b013.jpg" alt="WhatsApp">
+                </a>
+                <a href="https://chat.openai.com/" target="_blank">
+                    <img src="https://static.vecteezy.com/system/resources/previews/024/558/807/non_2x/openai-chatgpt-logo-icon-free-png.png"
+                        alt="ChatGPT">
+                </a>
+                <a href="https://www.youtube.com/" target="_blank">
+                    <img src="https://png.pngtree.com/png-clipart/20230401/original/pngtree-youtube-icon-social-media-png-image_9015287.png"
+                        alt="YouTube">
+                </a>
+                <a href="https://sanskar-satao.github.io/Calender/" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/128/3652/3652191.png" alt="O-Calendar">
+                </a>
+            </div>
+        </div>
     </div>
-    <div class="glass-card">
-        <h1>Oasis</h1>
-        <form id="searchForm">
-            <input type="text" placeholder="Search anything here..." id="searchInput" required>
-            <button type="button" id="voiceBtn"
-                style="padding:10px;border-radius:10px;margin-left:10px;cursor:pointer;">🎤</button>
-            <input type="submit" value="Search">
-        </form>
-    </div>
+    <!-- Search Results -->
+    <div id="results"></div>
+
+    <!-- Oasis AI Search -->
     <div id="aiAvatar" onclick="openAIMode()"
-        style="position: fixed; bottom: 30px; left: 30px; width:60px; height:60px; background:#85e6ff; border-radius:50%; display:flex; justify-content:center; align-items:center; cursor:pointer; box-shadow:0 0 20px #85e6ff;">
+        style="transition : all 0.3s ease; position: fixed; top: 30px; left: 30px; width:60px; height:60px; background:#85e6ff; border-radius:50%; display:flex; justify-content:center; align-items:center; cursor:pointer; box-shadow:0 0 20px #85e6ff;">
         🤖
     </div>
-    <div class="ai-mode-btn">
-        <button onclick="openOasisMaps()" class="Oasis-Maps-btn" aria-label="Oasis Maps">
-            <span>🗺️ Oasis Maps</span>
-        </button>
-        <!-- Analog Clock -->
-        <div class="glass-clock">
-            <div class="clock">
-                <div class="hand hour" id="hour-hand"></div>
-                <div class="hand minute" id="minute-hand"></div>
-                <div class="hand second" id="second-hand"></div>
-                <div class="center-dot"></div>
-            </div>
-            <div class="clockTrigger" id="digital-time"></div>
 
-        </div>
-
-    </div>
-
-
-    <div class="dropdown">
-        <button onclick="toggleDropdown()" class="dropdown-btn" aria-label="Open menu">
-            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828859.png" alt="Menu" class="menu-icon">
-        </button>
-
-        <div id="dropdownMenu" class="dropdown-content">
-            <a href="https://sanskar-satao.github.io/Oasis-Photos/" target="_blank">
-                <img src="https://images-workbench.99static.com/ySxJl7wz7CuA_VXXMjdM2ac9RqM=/99designs-contests-attachments/80/80341/attachment_80341132"
-                    alt="Oasis-Photos">
-            </a>
-            <a href="https://web.whatsapp.com/" target="_blank">
-                <img src="https://i.pinimg.com/736x/c6/d8/01/c6d80112426e35a0dc293bf68e65b013.jpg" alt="WhatsApp">
-            </a>
-            <a href="https://chatgpt.com/" target="_blank">
-                <img src="https://static.vecteezy.com/system/resources/previews/024/558/807/non_2x/openai-chatgpt-logo-icon-free-png.png"
-                    alt="ChatGPT">
-            </a>
-            <a href="https://www.youtube.com/" target="_blank">
-                <img src="https://png.pngtree.com/png-clipart/20230401/original/pngtree-youtube-icon-social-media-png-image_9015287.png"
-                    alt="YouTube">
-            </a>
-            <a href="https://sanskar-satao.github.io/Calender/" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/128/3652/3652191.png" alt="O-Calendar">
-            </a>
-        </div>
-    </div>
-    <canvas id="particleCanvas" style="position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1;"></canvas>
+    <!-- Particle Background -->
+    <canvas id="particleCanvas"></canvas>
 
     <script>
-        function openURL() {
-            let url = document.getElementById("urlInput").value.trim();
-            if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                url = "https://" + url; // auto-fix
+
+        const API_KEY = "AIzaSyALZtl7_RShOU7P53qxf5RGFr4EiIDE7xo";
+        const CX = "f4df3e7489c8546b4";
+
+        async function searchOasis(query) {
+            const resultsDiv = document.getElementById("results") || (() => {
+                const div = document.createElement("div");
+                div.id = "results";
+                div.style.marginTop = "120px";
+                div.style.padding = "20px";
+                div.style.color = "#fff";
+                div.style.fontFamily = "Segoe UI, sans-serif";
+                document.body.appendChild(div);
+                return div;
+            })();
+
+            const loader = document.getElementById("loader") || (() => {
+                const l = document.createElement("p");
+                l.id = "loader";
+                l.style.color = "#fff";
+                l.style.textAlign = "center";
+                l.textContent = "Loading...";
+                resultsDiv.before(l);
+                return l;
+            })();
+
+
+            // -------------------- Hide all other content --------------------
+            document.getElementById("homepage").style.display = "none";
+
+
+            // -------------------- Show top search bar --------------------
+            let topSearch = document.getElementById("topSearchBar");
+            if (!topSearch) {
+                topSearch = document.createElement("form");
+                topSearch.id = "topSearchBar";
+                topSearch.className = "search-bar";
+                topSearch.onsubmit = (e) => {
+                    e.preventDefault();
+                    searchOasis(document.getElementById("searchBox").value);
+                };
+                topSearch.innerHTML = `
+        <input id="searchBox" type="text" value="${query}" placeholder="Search...">
+        <button type="submit">Search</button>
+    `;
+
+                topSearch.style.position = "fixed";
+                topSearch.style.top = "20px";
+                topSearch.style.left = "50%";
+                topSearch.style.transform = "translateX(-50%)";
+                topSearch.style.zIndex = "9999";
+
+                document.body.appendChild(topSearch);
+            } else {
+                document.getElementById("searchBox").value = query;
             }
-            window.open(url, "_blank");
-            document.getElementById("urlInput").value = "";
+
+
+
+            resultsDiv.innerHTML = "";
+            loader.style.display = "block";
+
+            try {
+                const url = `https://www.googleapis.com/customsearch/v1?key=${API_KEY}&cx=${CX}&q=${encodeURIComponent(query)}`;
+                const res = await fetch(url);
+                const data = await res.json();
+                loader.style.display = "none";
+
+                if (!data.items || data.items.length === 0) {
+                    resultsDiv.innerHTML = `<p style="color:#fff;text-align:center;">No results found.</p>`;
+                    return;
+                }
+
+                data.items.forEach(item => {
+                    const result = document.createElement("div");
+                    result.className = "result-item";
+                    result.innerHTML = `
+                     <a href="${item.link}" target="_blank">${item.title}</a>
+                     <p>${item.snippet}</p>
+                    `;
+                    resultsDiv.appendChild(result);
+                });
+
+
+            } catch (err) {
+                loader.style.display = "none";
+                resultsDiv.innerHTML = `<p style="color:red;text-align:center;">Error: ${err.message}</p>`;
+            }
         }
 
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.key.toLowerCase() === 'm') voiceBtn.click();
-            if (e.ctrlKey && e.key.toLowerCase() === 'l') searchInput.focus();
+        /* -------------------- Handle Search Form -------------------- */
+        document.getElementById("searchForm").addEventListener("submit", e => {
+            e.preventDefault();
+            const query = document.getElementById("searchInput").value.trim();
+            if (query) searchOasis(query);
         });
 
-        function updateClock() {
-            document.getElementById("clock").innerText = "🕒 " + new Date().toLocaleTimeString();
-        }
-        setInterval(updateClock, 1000);
-
-        function startVoiceRecognition() {
-            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.lang = 'en-US';
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-
+        /* -------------------- Voice Recognition -------------------- */
+        document.getElementById("voiceBtn").addEventListener("click", () => {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert("Your browser does not support speech recognition.");
+                return;
+            }
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = "en-US";
             recognition.start();
 
-            recognition.onresult = function (event) {
-                const speech = event.results[0][0].transcript.toLowerCase();
-                document.getElementById("searchInput").value = speech;
-                document.getElementById("searchForm").dispatchEvent(new Event('submit'));
+            recognition.onresult = event => {
+                const query = event.results[0][0].transcript;
+                document.getElementById("searchInput").value = query;
+                searchOasis(query);
             };
 
-            recognition.onerror = function (event) {
-                alert("🎤 Voice recognition failed: " + event.error);
-            };
-        }
-        document.getElementById("voiceBtn").addEventListener("click", startVoiceRecognition);
-
-
-
-        document.addEventListener("click", function (e) {
-            if (e.target.classList.contains("clockTrigger")) {
-                window.open("clock.html", "_blank"); // open in a new tab
-            }
+            recognition.onerror = () => alert("Voice recognition error.");
         });
 
-        function toggleDropdown() {
-            document.getElementById("dropdownMenu").classList.toggle("show");
+        /* -------------------- URL Bar Function -------------------- */
+        function openURL() {
+            let input = document.getElementById("urlInput").value.trim();
+            if (!input) return;
+            if (!/^https?:\/\//i.test(input)) input = "https://" + input;
+            window.open(input, "_blank");
         }
-        window.onclick = function (event) {
-            if (!event.target.closest('.dropdown')) {
-                document.getElementById("dropdownMenu").classList.remove("show");
-            }
-        }
+
+        /* -------------------- AI / Maths / Maps / Clock -------------------- */
         function openAIMode() {
             window.open("AI Mode.html", "_blank");
         }
         function openOasisMaps() {
             window.open("Oasis Maps.html", "_blank");
         }
-        function updateClock() {
-            const now = new Date();
-            const seconds = now.getSeconds();
-            const minutes = now.getMinutes();
-            const hours = now.getHours();
-
-            // Analog movement
-            const secondDeg = (seconds / 60) * 360;
-            const minuteDeg = ((minutes + seconds / 60) / 60) * 360;
-            const hourDeg = ((hours % 12 + minutes / 60) / 12) * 360;
-
-            document.getElementById("second-hand").style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
-            document.getElementById("minute-hand").style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
-            document.getElementById("hour-hand").style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
-
-            // Digital display
-            const ampm = hours >= 12 ? "PM" : "AM";
-            const displayHours = hours % 12 || 12;
-            const displayMinutes = minutes.toString().padStart(2, "0");
-            const displaySeconds = seconds.toString().padStart(2, "0");
-
-            document.getElementById("digital-time").textContent =
-                `${displayHours}:${displayMinutes}:${displaySeconds} ${ampm}`;
+        function openMathsMode() {
+            window.open("Maths Mode.html", "_blank");
+        }
+        function openOasisClock() {
+            window.open("Oasis Clock.html", "_blank");
         }
 
-        setInterval(updateClock, 1000);
-        updateClock(); // initial call
-
-        const appLinks = {
-            "youtube": "https://www.youtube.com/",
-            "facebook": "https://www.facebook.com/",
-            "twitter": "https://twitter.com/",
-            "instagram": "https://www.instagram.com/",
-            "whatsapp": "https://web.whatsapp.com/",
-            "linkedin": "https://www.linkedin.com/",
-            "reddit": "https://www.reddit.com/",
-            "gmail": "https://mail.google.com/",
-            "google mail": "https://mail.google.com/",
-            "gmail.com": "https://mail.google.com/",
-            "chatgpt": "https://chat.openai.com/",
-            "spotify": "https://www.spotify.com/",
-            "netflix": "https://www.netflix.com/",
-            "amazon": "https://www.amazon.com/",
-            "flipkart": "https://www.flipkart.com/",
-            "quora": "https://www.quora.com/",
-            "stackoverflow": "https://stackoverflow.com/",
-            "github": "https://github.com/",
-            "oasis-photos": "https://sanskar-satao.github.io/Oasis-Photos/",
-            "o-calendar": "https://sanskar-satao.github.io/Calender/",
-            "calendar": "https://sanskar-satao.github.io/Calender/"
-        };
-
-
-        document.getElementById("searchForm").addEventListener("submit", function (e) {
-            e.preventDefault(); // prevent default form submission
-
-            let query = document.getElementById("searchInput").value.trim().toLowerCase();
-
-            // Check if query matches any app keyword
-            if (appLinks[query]) {
-                window.open(appLinks[query], "_blank"); // open app link directly
-            } else {
-                // normal search on Google
-                window.open("https://www.google.com/search?q=" + encodeURIComponent(query), "_blank");
+        /* -------------------- Dropdown Menu -------------------- */
+        function toggleDropdown() {
+            const menu = document.getElementById("dropdownMenu");
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        }
+        window.addEventListener("click", e => {
+            if (!e.target.closest('.dropdown')) {
+                document.getElementById("dropdownMenu").style.display = "none";
             }
-
-            // optional: clear input
-            document.getElementById("searchInput").value = "";
         });
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
+
+        /* -------------------- Analog & Digital Clock -------------------- */
+        function updateClock() {
+            const now = new Date();
+            const second = now.getSeconds();
+            const minute = now.getMinutes();
+            const hour = now.getHours();
+
+            document.getElementById("second-hand").style.transform = `translateX(-50%) rotate(${second * 6}deg)`;
+            document.getElementById("minute-hand").style.transform = `translateX(-50%) rotate(${minute * 6}deg)`;
+            document.getElementById("hour-hand").style.transform = `translateX(-50%) rotate(${(hour % 12) * 30 + minute / 2}deg)`;
+
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById("digital-time").textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        /* -------------------- Particle Background -------------------- */
+        const canvas = document.getElementById("particleCanvas");
+        const ctx = canvas.getContext("2d");
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
         let particles = [];
-        for (let i = 0; i < 100; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                radius: Math.random() * 2 + 1,
-                speedX: (Math.random() - 0.5) * 0.5,
-                speedY: (Math.random() - 0.5) * 0.5
-            });
+        function createParticles() {
+            for (let i = 0; i < 100; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 2 + 1,
+                    dx: (Math.random() - 0.5) * 1.5,
+                    dy: (Math.random() - 0.5) * 1.5
+                });
+            }
         }
-
-        function animateParticles() {
+        function drawParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let p of particles) {
+            particles.forEach(p => {
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(255,255,255,0.6)';
+                ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
                 ctx.fill();
-                p.x += p.speedX;
-                p.y += p.speedY;
-
-                // wrap around edges
-                if (p.x > canvas.width) p.x = 0;
-                if (p.x < 0) p.x = canvas.width;
-                if (p.y > canvas.height) p.y = 0;
-                if (p.y < 0) p.y = canvas.height;
-            }
-            requestAnimationFrame(animateParticles);
+                p.x += p.dx; p.y += p.dy;
+                if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+            });
+            requestAnimationFrame(drawParticles);
         }
-        animateParticles();
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-        const voiceBtn = document.getElementById("voiceBtn");
+        createParticles();
+        drawParticles();
+        window.addEventListener("resize", () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 
-        voiceBtn.addEventListener("click", () => {
-            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.lang = 'en-US';
-            recognition.start();
-
-            recognition.onresult = (event) => {
-                const speech = event.results[0][0].transcript;
-                searchInput.value = speech;
-            };
+        /* -------------------- Keyboard Shortcuts -------------------- */
+        document.addEventListener("keydown", e => {
+            if (e.ctrlKey && e.key.toLowerCase() === "m") document.getElementById("voiceBtn").click();
+            if (e.ctrlKey && e.key.toLowerCase() === "l") document.getElementById("searchInput").focus();
         });
 
     </script>
