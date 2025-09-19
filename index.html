@@ -404,7 +404,6 @@
             z-index: 999;
         }
 
-        /* hide all contant except search results */
         .search-mode #mainContent {
             display: none;
         }
@@ -441,12 +440,14 @@
             backdrop-filter: blur(5px) saturate(180%);
         }
 
+        /* Hover effect */
         .result-item:hover {
             background: rgba(0, 0, 0, 0.59);
             transform: translateY(-3px);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
         }
 
+        /* Title link */
         .result-item a {
             font-size: 18px;
             font-weight: 600;
@@ -459,6 +460,7 @@
             color: #82c4ff;
         }
 
+        /* Snippet */
         .result-item p {
             font-size: 14px;
             color: #ddd;
@@ -480,6 +482,7 @@
             backdrop-filter: blur(6px);
         }
 
+        /* Input field */
         .search-bar input[type="text"] {
             flex: 1;
             padding: 12px 15px;
@@ -494,6 +497,7 @@
             outline: none;
         }
 
+        /* Voice & Search buttons (shared) */
         .search-bar button,
         .search-bar input[type="submit"] {
             padding: 10px 18px;
@@ -508,6 +512,7 @@
             transition: all 0.3s ease;
         }
 
+        /* Hover effect */
         .search-bar button:hover,
         .search-bar input[type="submit"]:hover {
             transition: all 0.3s ease;
@@ -537,6 +542,67 @@
         .APPS:hover {
             transition: all 0.3s ease;
             box-shadow: rgb(2, 225, 255) 0 0 40px;
+        }
+
+        /* -------------------- Mobile Responsive Styles -------------------- */
+        @media (max-width: 600px) {
+
+            /* Hide extra buttons and apps */
+            #maths-mode-btn,
+            #Oasis-Maps-btn,
+            #Oasis-Clock-btn,
+            #aiAvatar,
+            .APPS {
+                display: none !important;
+            }
+
+            /* Glass card padding adjustment */
+            .glass-card {
+                min-width: unset;
+                padding: 18vw 5vw;
+                top: 10px;
+            }
+
+            /* Search form width adjustment */
+            #searchForm {
+                width: 90vw;
+            }
+
+            /* URL bar full width */
+            .url-bar {
+                display: none !important;
+            }
+
+            .url-bar input {
+                width: 75vw !important;
+            }
+
+            .url-bar button {
+                padding: 8px 14px !important;
+                font-size: 0.9rem !important;
+            }
+
+            /* Heading font size smaller */
+            h1 {
+                font-size: 2rem !important;
+                letter-spacing: 4px;
+                padding: 0.7rem 1.5rem;
+            }
+
+            /* Top search bar (after search) width */
+            #topSearchBar {
+                width: 90vw !important;
+            }
+
+            /* Results container full width */
+            #results {
+                width: 90vw !important;
+                margin-left: 5vw;
+                margin-right: 5vw;
+            }
+            .dropdown {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -625,7 +691,7 @@
     <canvas id="particleCanvas"></canvas>
 
     <script>
-
+        /* -------------------- Config: Google Custom Search API -------------------- */
         const API_KEY = "AIzaSyALZtl7_RShOU7P53qxf5RGFr4EiIDE7xo";
         const CX = "f4df3e7489c8546b4";
 
@@ -700,7 +766,7 @@
 
                 data.items.forEach(item => {
                     const result = document.createElement("div");
-                    result.className = "result-item";
+                    result.className = "result-item"; // add hover/animation styles
                     result.innerHTML = `
                      <a href="${item.link}" target="_blank">${item.title}</a>
                      <p>${item.snippet}</p>
@@ -749,7 +815,7 @@
             window.open(input, "_blank");
         }
 
-        /* -------------------- AI / Maths / Maps / Clock -------------------- */
+        /* -------------------- AI / Maths / Maps / Clock Placeholders -------------------- */
         function openAIMode() {
             window.open("AI Mode.html", "_blank");
         }
