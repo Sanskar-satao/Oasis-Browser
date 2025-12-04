@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-[#030303] overflow-x-hidden">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oasis | Beyond the Browser</title>
+    <meta name="description" content="Oasis Browser - Experience the fluid future of the web.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Syne', 'sans-serif'],
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        void: '#030303',
+                        glass: {
+                            100: 'rgba(255, 255, 255, 0.03)',
+                            200: 'rgba(255, 255, 255, 0.05)',
+                            300: 'rgba(255, 255, 255, 0.1)',
+                        }
+                    },
+                    backgroundImage: {
+                        'noise': "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.05%22/%3E%3C/svg%3E')",
+                    },
+                    animation: {
+                        'liquid': 'liquid 20s ease-in-out infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+                        'gradient-x': 'gradientX 15s ease infinite',
+                        'spin-slow': 'spin 30s linear infinite',
+                        'marquee': 'marquee 25s linear infinite',
+                        'reveal-up': 'revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        liquid: {
+                            '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
+                            '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 0.4, transform: 'scale(1)' },
+                            '50%': { opacity: 0.8, transform: 'scale(1.05)' },
+                        },
+                        gradientX: {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        },
+                        revealUp: {
+                            '0%': { opacity: 0, transform: 'translateY(40px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Global Reset */
+        body {
+            font-feature-settings: "ss01", "ss02", "cv01";
+        }
+
+        /* Cinematic Noise Overlay */
+        .bg-noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.4%22/%3E%3C/svg%3E');
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Smooth Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #030303;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a855f7;
+        }
+
+        /* Holographic Card 2.0 */
+        .holo-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Shimmer Effect */
+        .holo-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+
+        .holo-card:hover::after {
+            transform: translateX(100%);
+        }
+
+        .holo-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Abstract Blobs */
+        .blob {
+            position: absolute;
+            filter: blur(90px);
+            opacity: 0.5;
+            z-index: -1;
+            will-change: transform, border-radius;
+            animation: liquid 25s ease-in-out infinite alternate;
+        }
+
+        /* Text Gradient */
+        .text-fluid {
+            background: linear-gradient(90deg, #fff, #c084fc, #22d3ee, #fff);
+            background-size: 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientX 8s linear infinite;
+        }
+
+        /* Cosmic Button */
+        .btn-cosmic {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .btn-cosmic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-cosmic:hover::before {
+            left: 100%;
+        }
+
+        .btn-cosmic:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+        }
+
+        /* 3D Perspective */
+        .perspective-container {
+            perspective: 2000px;
+        }
+
+        .tilt-element {
+            transform-style: preserve-3d;
+            transform: rotateY(-5deg) rotateX(5deg);
+            transition: transform 0.5s ease-out;
+        }
+
+        .tilt-element:hover {
+            transform: rotateY(-2deg) rotateX(2deg) scale(1.02);
+        }
+
+        /* Reveal Animation Classes */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Accordion */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .faq-item.active .faq-content {
+            max-height: 200px;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-purple-500 selection:text-white text-white">
+
+    <!-- Cinematic Noise -->
+    <div class="bg-noise-overlay"></div>
+
+    <!-- Fluid Backgrounds -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="blob w-[40vw] h-[40vw] bg-purple-900/40 top-[-10%] left-[-10%] mix-blend-screen"></div>
+        <div
+            class="blob w-[35vw] h-[35vw] bg-blue-900/40 bottom-[-10%] right-[-10%] animation-delay-2000 mix-blend-screen">
+        </div>
+        <div
+            class="blob w-[25vw] h-[25vw] bg-cyan-900/30 top-[40%] left-[40%] animation-delay-4000 mix-blend-screen opacity-30">
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 pt-6 px-4 md:px-6">
+        <div
+            class="max-w-6xl mx-auto backdrop-blur-xl bg-glass-100 border border-glass-200 rounded-full px-6 py-3 md:px-8 md:py-4 flex justify-between items-center shadow-2xl transition-all duration-300 hover:border-glass-300">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-8 h-8 rounded-full bg-gradient-to-tr from-cyan-400 to-purple-500 animate-spin-slow opacity-80 blur-[2px]">
+                </div>
+                <div class="absolute w-3 h-3 left-[2.2rem] md:left-[2.7rem] bg-white rounded-full z-10"></div>
+                <span class="font-display font-bold text-xl tracking-wide z-10">OASIS</span>
+            </div>
+
+            <div class="hidden md:flex gap-8 text-sm font-light tracking-widest uppercase opacity-70">
+                <a href="#vision" class="hover:text-white hover:opacity-100 transition-all hover:scale-105">Vision</a>
+                <a href="#features"
+                    class="hover:text-white hover:opacity-100 transition-all hover:scale-105">Modules</a>
+                <a href="#faq" class="hover:text-white hover:opacity-100 transition-all hover:scale-105">FAQ</a>
+            </div>
+
+            <a href="https://github.com/Sanskar-satao/Oasis-Browser/releases/download/v1.0.0/Oasis.AI.zip"
+                class="btn-cosmic px-5 py-2 md:px-6 md:py-2.5 rounded-full font-bold text-xs uppercase tracking-widest flex items-center gap-2 group">
+                <span class="w-2 h-2 rounded-full bg-green-400 group-hover:animate-pulse"></span> Beta
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center relative pt-24 pb-12 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+            <!-- Content -->
+            <div
+                class="relative z-10 flex flex-col items-center lg:items-start text-center lg:text-left space-y-8 order-2 lg:order-1 reveal-on-scroll">
+                <div
+                    class="inline-flex items-center gap-2 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-md bg-white/5 animate-float-slow">
+                    <span class="relative flex h-2 w-2">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
+                    </span>
+                    <span class="text-xs font-display uppercase tracking-[0.2em] text-cyan-200">System v1.0.4
+                        Online</span>
+                </div>
+
+                <h1
+                    class="text-6xl md:text-8xl lg:text-[7rem] font-display font-extrabold leading-[0.9] tracking-tighter">
+                    THE WEB<br>
+                    <span class="text-fluid">LIQUIFIED.</span>
+                </h1>
+
+                <p class="text-lg md:text-xl font-light text-gray-400 max-w-lg leading-relaxed">
+                    Forget tabs. Forget windows. Oasis is a continuous stream of intelligence, rendering the internet as
+                    a fluid, organic workspace.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 pt-4 w-full sm:w-auto">
+                    <a href="https://github.com/Sanskar-satao/Oasis-Browser/releases/download/v1.0.0/Oasis.AI.zip"
+                        class="btn-cosmic px-8 py-4 rounded-2xl text-lg font-display font-bold tracking-wide flex justify-center items-center gap-3">
+                        <span>Initialize</span>
+                        <i class="fa-solid fa-arrow-right-long text-sm"></i>
+                    </a>
+
+                    <button
+                        class="px-8 py-4 rounded-2xl border border-white/10 hover:bg-white/5 transition text-gray-400 hover:text-white flex justify-center items-center gap-2">
+                        <i class="fa-brands fa-github"></i>
+                        <span>Source</span>
+                    </button>
+                </div>
+
+                <!-- Micro Stats (Animated on Scroll) -->
+                <div class="pt-8 flex gap-8 border-t border-white/5 w-full justify-center lg:justify-start">
+                    <div class="reveal-on-scroll" style="transition-delay: 200ms;">
+                        <div class="text-2xl font-display font-bold text-white"><span class="counter"
+                                data-target="0">0</span><span class="text-sm text-gray-500">ms</span></div>
+                        <div class="text-[10px] uppercase tracking-widest text-gray-500">Latency</div>
+                    </div>
+                    <div class="reveal-on-scroll" style="transition-delay: 400ms;">
+                        <div class="text-2xl font-display font-bold text-white"><span class="counter"
+                                data-target="100">0</span><span class="text-sm text-gray-500">%</span></div>
+                        <div class="text-[10px] uppercase tracking-widest text-gray-500">Private</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3D Abstract Browser Mockup -->
+            <div
+                class="perspective-container relative w-full aspect-square max-w-[600px] mx-auto flex items-center justify-center order-1 lg:order-2 reveal-on-scroll">
+                <!-- Floating Glass Card (The Browser) -->
+                <div
+                    class="tilt-element w-full h-auto aspect-[4/3] bg-[#0f172a] backdrop-blur-2xl border border-slate-700/50 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl relative z-10 overflow-hidden group">
+
+                    <!-- Reflection Glint -->
+                    <div
+                        class="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition duration-700 pointer-events-none z-50">
+                    </div>
+
+                    <!-- Inner Browser Interface (Replica of index.html in Dark Mode) -->
+                    <div class="h-full flex bg-slate-900 text-slate-100 font-sans">
+
+                        <!-- Sidebar -->
+                        <aside
+                            class="w-14 bg-slate-900/90 border-r border-slate-800 flex flex-col items-center py-4 gap-4 z-20">
+                            <!-- Logo -->
+                            <div class="p-2 bg-indigo-600 rounded-xl text-white shadow-lg shadow-indigo-500/30 mb-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                                    <path d="M2 12h20" />
+                                </svg>
+                            </div>
+
+                            <!-- Icons -->
+                            <div class="p-2 text-slate-400 hover:bg-slate-800 rounded-lg"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                    <polyline points="9 22 9 12 15 12 15 22" />
+                                </svg></div>
+                            <div class="p-2 text-slate-400 hover:bg-slate-800 rounded-lg"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
+                                </svg></div>
+                            <div class="p-2 text-slate-400 hover:bg-slate-800 rounded-lg"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                </svg></div>
+                            <div class="p-2 text-slate-400 hover:bg-slate-800 rounded-lg"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                                    <polyline points="14 2 14 8 20 8" />
+                                </svg></div>
+                            <div class="p-2 text-slate-400 hover:bg-slate-800 rounded-lg"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect x="4" y="2" width="16" height="20" rx="2" />
+                                    <line x1="8" y1="6" x2="16" y2="6" />
+                                    <line x1="16" y1="14" x2="16" y2="14" />
+                                    <line x1="16" y1="18" x2="16" y2="18" />
+                                    <line x1="12" y1="14" x2="12" y2="14" />
+                                    <line x1="12" y1="18" x2="12" y2="18" />
+                                    <line x1="8" y1="14" x2="8" y2="14" />
+                                    <line x1="8" y1="18" x2="8" y2="18" />
+                                </svg></div>
+
+                            <div class="mt-auto mb-2 p-2 text-slate-400 hover:bg-slate-800 rounded-lg"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3" />
+                                    <path
+                                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+                                </svg></div>
+                        </aside>
+
+                        <!-- Main Column -->
+                        <div class="flex-1 flex flex-col min-w-0 bg-slate-900">
+                            <!-- Header -->
+                            <header
+                                class="h-20 border-b border-slate-800 flex flex-col justify-center px-4 gap-2 bg-slate-900/50 backdrop-blur-sm">
+                                <!-- Window Controls + Tabs -->
+                                <div class="flex items-center justify-between">
+                                    <div class="flex gap-1.5">
+                                        <div
+                                            class="w-2.5 h-2.5 rounded-full bg-red-500 hover:bg-red-600 transition-colors">
+                                        </div>
+                                        <div
+                                            class="w-2.5 h-2.5 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors">
+                                        </div>
+                                        <div
+                                            class="w-2.5 h-2.5 rounded-full bg-green-500 hover:bg-green-600 transition-colors">
+                                        </div>
+                                    </div>
+                                    <!-- Tab -->
+                                    <div class="flex-1 ml-4 flex">
+                                        <div
+                                            class="bg-slate-800 px-3 py-1.5 rounded-t-lg text-[10px] border border-b-0 border-slate-700 flex items-center gap-2 text-white">
+                                            <div class="w-1.5 h-1.5 rounded-full bg-indigo-500"></div>
+                                            <span>New Tab</span>
+                                            <span class="ml-2 text-slate-500">&times;</span>
+                                        </div>
+                                        <div
+                                            class="px-2 py-1.5 text-slate-500 hover:text-white transition-colors cursor-pointer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Address Bar Row -->
+                                <div class="flex items-center gap-3">
+                                    <div class="flex gap-1 text-slate-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="15 18 9 12 15 6"></polyline>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="9 18 15 12 9 6"></polyline>
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M23 4v6h-6" />
+                                            <path d="M1 20v-6h6" />
+                                            <path
+                                                d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                                        </svg>
+                                    </div>
+                                    <div
+                                        class="flex-1 bg-slate-800 rounded-lg h-7 flex items-center px-3 text-[10px] text-slate-400 border border-transparent focus-within:border-indigo-500/50 transition-colors">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-indigo-500">
+                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                        </svg>
+                                        oasis://home
+                                    </div>
+                                    <div class="flex gap-2 items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="text-slate-400">
+                                            <path d="M2 12h5" />
+                                            <path d="M17 12h5" />
+                                            <path d="M9 12a3 3 0 1 0 6 0" />
+                                            <path d="M6 16a6 6 0 1 0 12 0" />
+                                        </svg>
+                                        <div
+                                            class="w-6 h-6 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-[8px] text-white font-bold shadow-md">
+                                            OA</div>
+                                    </div>
+                                </div>
+                            </header>
+
+                            <!-- Viewport -->
+                            <main
+                                class="flex-1 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden flex flex-col items-center justify-start pt-16">
+                                <!-- Oasis Logo Text -->
+                                <h1 class="text-4xl md:text-5xl font-thin text-white mb-8 tracking-tight font-sans">
+                                    Oasis</h1>
+
+                                <!-- App Grid -->
+                                <div class="flex gap-4 md:gap-6">
+                                    <!-- Bookmarks -->
+                                    <div class="flex flex-col items-center gap-2 group cursor-default">
+                                        <div
+                                            class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-yellow-100/10 text-yellow-500 flex items-center justify-center border border-white/5 group-hover:-translate-y-1 transition-transform">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
+                                            </svg>
+                                        </div>
+                                        <span class="text-[10px] text-slate-400">Bookmarks</span>
+                                    </div>
+                                    <!-- Notes -->
+                                    <div class="flex flex-col items-center gap-2 group cursor-default">
+                                        <div
+                                            class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-amber-100/10 text-amber-500 flex items-center justify-center border border-white/5 group-hover:-translate-y-1 transition-transform">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path
+                                                    d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                                                <polyline points="14 2 14 8 20 8" />
+                                            </svg>
+                                        </div>
+                                        <span class="text-[10px] text-slate-400">Notes</span>
+                                    </div>
+                                    <!-- Tasks -->
+                                    <div class="flex flex-col items-center gap-2 group cursor-default">
+                                        <div
+                                            class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-emerald-100/10 text-emerald-500 flex items-center justify-center border border-white/5 group-hover:-translate-y-1 transition-transform">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M9 11l3 3L22 4" />
+                                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                                            </svg>
+                                        </div>
+                                        <span class="text-[10px] text-slate-400">Tasks</span>
+                                    </div>
+                                    <!-- Calc -->
+                                    <div class="flex flex-col items-center gap-2 group cursor-default">
+                                        <div
+                                            class="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-blue-100/10 text-blue-500 flex items-center justify-center border border-white/5 group-hover:-translate-y-1 transition-transform">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="4" y="2" width="16" height="20" rx="2" />
+                                            </svg>
+                                        </div>
+                                        <span class="text-[10px] text-slate-400">Calc</span>
+                                    </div>
+                                </div>
+
+                                <!-- Fake History -->
+                                <div class="mt-12 w-full max-w-[280px]">
+                                    <div class="text-[10px] font-bold text-slate-500 uppercase mb-2">Recent</div>
+                                    <div class="space-y-2">
+                                        <div
+                                            class="flex justify-between items-center p-2 rounded border border-slate-800 bg-slate-800/50">
+                                            <span class="text-[10px] text-slate-300">GitHub - Oasis</span>
+                                            <span class="text-[9px] text-slate-500">1m ago</span>
+                                        </div>
+                                        <div
+                                            class="flex justify-between items-center p-2 rounded border border-slate-800 bg-slate-800/50">
+                                            <span class="text-[10px] text-slate-300">YouTube</span>
+                                            <span class="text-[9px] text-slate-500">5m ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </main>
+
+                            <!-- Bottom Bar -->
+                            <div
+                                class="h-6 bg-slate-900 border-t border-slate-800 flex items-center justify-between px-3 text-[9px] text-slate-500 font-mono">
+                                <div class="flex gap-3">
+                                    <span>MEM: 142MB</span>
+                                    <span>TRACKERS: 0</span>
+                                </div>
+                                <div class="flex gap-3">
+                                    <span>ZOOM: 100%</span>
+                                    <span>12:00 PM</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backing Glow Elements -->
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-cyan-500 to-purple-600 blur-[80px] opacity-20 -z-10 animate-pulse-glow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Infinite Ecosystem Marquee -->
+    <section class="py-12 border-y border-white/5 bg-black/40 backdrop-blur-sm overflow-hidden">
+        <div
+            class="flex items-center gap-12 animate-marquee whitespace-nowrap opacity-50 hover:opacity-100 transition-opacity duration-500">
+            <span class="text-xl font-display font-bold tracking-widest mx-8">REACT</span>
+            <span class="text-xl font-display font-bold tracking-widest mx-8">WEBGL</span>
+            <span class="text-xl font-display font-bold tracking-widest mx-8">TAILWIND</span>
+            <span class="text-xl font-display font-bold tracking-widest mx-8">ELECTRON</span>
+            <span class="text-xl font-display font-bold tracking-widest mx-8">NODE.JS</span>
+            <span class="text-xl font-display font-bold tracking-widest mx-8">TYPESCRIPT</span>
+            <span class="text-xl font-display font-bold tracking-widest mx-8">REACT</span>
+            <span class="text-xl font-display font-bold tracking-widest mx-8">WEBGL</span>
+            <span class="text-xl font-display font-bold tracking-widest mx-8">TAILWIND</span>
+            <span class="text-xl font-display font-bold tracking-widest mx-8">ELECTRON</span>
+            <span class="text-xl font-display font-bold tracking-widest mx-8">NODE.JS</span>
+            <span class="text-xl font-display font-bold tracking-widest mx-8">TYPESCRIPT</span>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section id="features" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-end justify-between mb-16 reveal-on-scroll">
+                <div>
+                    <span class="text-cyan-400 font-display uppercase tracking-[0.3em] text-sm">Architecture</span>
+                    <h2 class="text-4xl md:text-6xl font-display font-bold mt-4 text-white">ORGANIC<br>COMPUTING</h2>
+                </div>
+                <p class="text-gray-400 max-w-xs text-right mt-8 md:mt-0 font-light text-sm md:text-base">
+                    Tools that adapt to your thought process, not the other way around.
+                </p>
+            </div>
+
+            <!-- Bento Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 auto-rows-[300px]">
+
+                <!-- Large Card: AI -->
+                <div
+                    class="md:col-span-8 md:row-span-2 holo-card rounded-[2rem] p-8 md:p-10 flex flex-col justify-between group reveal-on-scroll">
+                    <div class="flex justify-between items-start relative z-10">
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md">
+                            <i class="fa-solid fa-wand-magic-sparkles text-3xl text-purple-400"></i>
+                        </div>
+                        <span
+                            class="text-xs uppercase tracking-widest text-gray-500 border border-white/10 px-3 py-1 rounded-full">Neural
+                            Core</span>
+                    </div>
+
+                    <div class="relative z-10 mt-auto">
+                        <h3
+                            class="text-3xl md:text-4xl font-display font-bold mb-4 group-hover:text-purple-300 transition-colors">
+                            Fluid Intelligence</h3>
+                        <p class="text-gray-400 max-w-lg text-base md:text-lg font-light leading-relaxed">
+                            An AI sidebar that doesn't just answer—it collaborates. It reads the context of your current
+                            tab and offers extensions of thought.
+                        </p>
+                    </div>
+
+                    <!-- Abstract Art Background -->
+                    <div
+                        class="absolute right-0 bottom-0 w-64 h-64 bg-gradient-to-tl from-purple-500/20 to-transparent blur-3xl rounded-full group-hover:scale-150 transition duration-1000 pointer-events-none">
+                    </div>
+                </div>
+
+                <!-- Tall Card: Lo-Fi -->
+                <div class="md:col-span-4 md:row-span-2 holo-card rounded-[2rem] p-8 flex flex-col justify-end group reveal-on-scroll"
+                    style="transition-delay: 100ms;">
+                    <div class="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-50 transition duration-700 mix-blend-overlay"
+                        style="background-image: url('https://images.unsplash.com/photo-1614728263952-84ea256f9679?q=80&w=600&auto=format&fit=crop')">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="flex gap-1 h-4 items-end">
+                                <span class="w-1 h-full bg-cyan-400 animate-pulse"></span>
+                                <span class="w-1 h-2/3 bg-cyan-400 animate-pulse animation-delay-200"></span>
+                                <span class="w-1 h-1/2 bg-cyan-400 animate-pulse animation-delay-400"></span>
+                            </span>
+                            <span class="text-xs font-mono text-cyan-400">NOW PLAYING</span>
+                        </div>
+                        <h3 class="text-2xl font-display font-bold mb-2">Sonic Flow</h3>
+                        <p class="text-gray-400 font-light text-sm">Built-in Lo-Fi waves to synchronize your brainwaves
+                            for deep work.</p>
+                    </div>
+                </div>
+
+                <!-- Wide Card: Tools -->
+                <div class="md:col-span-12 holo-card rounded-[2rem] p-8 md:px-12 flex flex-col md:flex-row items-center justify-between gap-8 group reveal-on-scroll"
+                    style="transition-delay: 200ms;">
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        <div class="flex -space-x-4">
+                            <div
+                                class="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center z-30 group-hover:translate-x-0 transition-transform">
+                                <i class="fa-solid fa-ghost text-emerald-400 text-xl"></i></div>
+                            <div
+                                class="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center z-20 group-hover:translate-x-2 transition-transform">
+                                <i class="fa-solid fa-calculator text-yellow-400 text-xl"></i></div>
+                            <div
+                                class="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center z-10 group-hover:translate-x-4 transition-transform">
+                                <i class="fa-solid fa-shield-halved text-red-400 text-xl"></i></div>
+                        </div>
+                        <div class="text-center md:text-left">
+                            <h4 class="font-display font-bold text-2xl">Omni-Tools</h4>
+                            <p class="text-sm text-gray-500 font-light mt-1">Offline Arcade • Scientific Calc • Void
+                                Shield</p>
+                        </div>
+                    </div>
+
+                    <button
+                        class="px-6 py-2 rounded-full border border-white/10 text-xs uppercase tracking-widest hover:bg-white hover:text-black transition">Explore
+                        All</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 relative bg-gradient-to-b from-void to-black">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-3xl md:text-5xl font-display font-bold text-center mb-16 reveal-on-scroll">SYSTEM <span
+                    class="text-fluid">FAQ</span></h2>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item holo-card rounded-2xl p-6 cursor-pointer group reveal-on-scroll"
+                    onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-display text-lg">Is Oasis completely free?</h3>
+                        <i class="fa-solid fa-plus faq-icon transition-transform duration-300 text-cyan-400"></i>
+                    </div>
+                    <div class="faq-content">
+                        <p class="text-gray-400 font-light mt-4 leading-relaxed">Yes. Oasis is built on open-source
+                            principles. We believe privacy and efficiency should be accessible to everyone, not a
+                            premium feature.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item holo-card rounded-2xl p-6 cursor-pointer group reveal-on-scroll"
+                    style="transition-delay: 100ms;" onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-display text-lg">Does it support Chrome Extensions?</h3>
+                        <i class="fa-solid fa-plus faq-icon transition-transform duration-300 text-purple-400"></i>
+                    </div>
+                    <div class="faq-content">
+                        <p class="text-gray-400 font-light mt-4 leading-relaxed">Partially. We are building a
+                            compatibility layer for Manifest V3 extensions, but Oasis comes with most essential tools
+                            (AdBlock, Notes, AI) built-in natively for better performance.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item holo-card rounded-2xl p-6 cursor-pointer group reveal-on-scroll"
+                    style="transition-delay: 200ms;" onclick="toggleFaq(this)">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-display text-lg">Is my data private?</h3>
+                        <i class="fa-solid fa-plus faq-icon transition-transform duration-300 text-emerald-400"></i>
+                    </div>
+                    <div class="faq-content">
+                        <p class="text-gray-400 font-light mt-4 leading-relaxed">Absolutely. Oasis operates on a
+                            "Zero-Telemetry" policy. Your history, bookmarks, and AI chats are stored locally on your
+                            device and never sent to our cloud.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download"
+        class="min-h-[70vh] flex flex-col items-center justify-center relative overflow-hidden border-t border-white/5">
+        <!-- Tunnel Effect Background -->
+        <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-800/10 via-void to-void">
+        </div>
+
+        <div class="relative z-10 text-center px-6 reveal-on-scroll">
+            <div
+                class="w-20 h-20 mx-auto mb-8 rounded-3xl bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-[0_0_50px_rgba(168,85,247,0.4)] animate-float-slow">
+                <svg viewBox="0 0 100 100" class="w-10 h-10 text-white fill-current">
+                    <path d="M50 25 Q75 25 75 50 Q75 75 50 75 Q25 75 25 50 Q25 25 50 25" />
+                </svg>
+            </div>
+
+            <h2
+                class="text-5xl md:text-8xl font-display font-extrabold mb-8 text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-900 tracking-tight">
+                ENTER THE<br>OASIS
+            </h2>
+
+            <a href="https://github.com/Sanskar-satao/Oasis-Browser/releases/download/v1.0.0/Oasis.AI.zip"
+                class="btn-cosmic px-10 py-5 md:px-12 md:py-6 rounded-full text-lg md:text-xl font-display font-bold hover:scale-105 transition-transform flex items-center gap-4 mx-auto">
+                <i class="fa-brands fa-windows"></i>
+                <span>Download Client</span>
+            </a>
+
+            <p class="mt-8 text-gray-600 font-mono text-xs tracking-widest uppercase">
+                v1.0.4 Beta • Windows x64 • 65MB
+            </p>
+        </div>
+    </section>
+
+    <!-- Mega Footer -->
+    <footer class="pt-24 pb-12 border-t border-white/5 bg-void relative z-10 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="font-display font-bold text-4xl tracking-widest mb-6 text-white">OASIS</div>
+                    <p class="text-gray-500 max-w-sm font-light">
+                        Redefining the browser interface for the age of AI.
+                        Designed for the future. Built for today.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-display font-bold text-white mb-6">PLATFORM</h4>
+                    <ul class="space-y-4 text-gray-500 text-sm font-light">
+                        <li><a href="#" class="hover:text-cyan-400 transition">Windows Client</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition">macOS (Coming Soon)</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition">Linux (Experimental)</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition">Source Code</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-display font-bold text-white mb-6">COMMUNITY</h4>
+                    <ul class="space-y-4 text-gray-500 text-sm font-light">
+                        <li><a href="#" class="hover:text-purple-400 transition">Discord Server</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition">Twitter / X</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition">GitHub Issues</a></li>
+                        <li><a href="#" class="hover:text-purple-400 transition">Press Kit</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div
+                class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-700 uppercase tracking-widest">
+                <p>&copy; 2025 Oasis Project. Open Source (MIT).</p>
+                <div class="flex gap-4">
+                    <span>Privacy</span>
+                    <span>Terms</span>
+                    <span>Security</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Giant Background Text -->
+        <div class="absolute bottom-0 left-0 w-full text-center pointer-events-none">
+            <h1 class="text-[15vw] font-display font-bold text-white/[0.02] leading-none">OASIS</h1>
+        </div>
+    </footer>
+
+    <script>
+        // Reveal on Scroll Logic
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+
+                    // Trigger Counters if present
+                    const counters = entry.target.querySelectorAll('.counter');
+                    counters.forEach(counter => {
+                        const target = +counter.getAttribute('data-target');
+                        const duration = 2000; // 2 seconds
+                        const increment = target / (duration / 16);
+
+                        let current = 0;
+                        const updateCounter = () => {
+                            current += increment;
+                            if (current < target) {
+                                counter.innerText = Math.ceil(current);
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.innerText = target;
+                            }
+                        };
+                        updateCounter();
+                    });
+
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // FAQ Toggle
+        function toggleFaq(element) {
+            const allFaqs = document.querySelectorAll('.faq-item');
+
+            // Close others
+            allFaqs.forEach(item => {
+                if (item !== element) item.classList.remove('active');
+            });
+
+            // Toggle current
+            element.classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>
